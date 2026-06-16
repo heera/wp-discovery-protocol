@@ -21,7 +21,7 @@
     "$schema": {
       "type": "string",
       "format": "uri",
-      "description": "The wire-format schema URL. For wire-format 1.0, ends in /discovery/1.0.json."
+      "description": "The wire-format schema URL. For wire-format 1.0, ends in /discovery/1.0/discovery.schema.json."
     },
     "spec_version": {
       "const": "1.0",
