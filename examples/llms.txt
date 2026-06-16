@@ -1,0 +1,33 @@
+# Example Site
+
+> A WordPress site run by Jane Dev, a software developer. The site sells products
+> through WooCommerce and publishes articles about web development.
+
+This site is WP_Discovery compliant. A machine-readable Discovery Document is
+available at https://example.com/.well-known/discovery.json — start there to learn
+what this site exposes and how to interact with it.
+
+## Discovery
+
+- [Discovery Document](https://example.com/.well-known/discovery.json): Normalized capabilities, APIs, and agents.
+- [Agent Card](https://example.com/.well-known/agent-card.json): A2A-style agent descriptors.
+- [Sitemap](https://example.com/wp-sitemap.xml): All public URLs.
+
+## Commerce
+
+- [Store API](https://example.com/wp-json/wc/store/v1): Public WooCommerce Store API — browse products and operate the cart/checkout (no auth).
+- [Store-management API](https://example.com/wp-json/wc/v3): Authenticated WooCommerce admin API (requires REST API keys).
+- [WooCommerce REST docs](https://woocommerce.github.io/woocommerce-rest-api-docs/): Reference for both APIs.
+
+## About
+
+- [About Jane Dev](https://example.com/): Software developer; site owner and primary author.
+
+## Contact
+
+- Email: mailto:jane@example.com
+
+## Policies
+
+- [Privacy policy](https://example.com/privacy-policy/)
+- [security.txt](https://example.com/.well-known/security.txt)

@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://heera.github.io/wp-discovery-protocol/schema/discovery/1.0.json",
+  "title": "WP_Discovery Document",
+  "description": "Wire-format 1.0 of the WP_Discovery Document served at /.well-known/discovery.json. Encodes the envelope defined in spec/02-discovery-model.md and the Resource contract in spec/04-registry-contract.md. The eleven core top-level keys are required and closed; forward-compatible extension keys MUST be 'x-'-prefixed (M2). Nested objects validate their known fields but tolerate unknown ones (must-ignore-unknown), so the format can grow without a version bump.",
+  "type": "object",
+  "required": [
+    "$schema",
+    "spec_version",
+    "site",
+    "identity",
+    "documents",
+    "well_known",
+    "apis",
+    "agents",
+    "resources",
+    "capabilities",
+    "trust"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "The wire-format schema URL. For wire-format 1.0, ends in /discovery/1.0.json."
+    },
+    "spec_version": {
+      "const": "1.0",
+      "description": "Frozen wire-format version. A consumer selects its parser on this exact string. Major.minor, not semver."
+    },
+    "site": { "$ref": "#/$defs/site" },
+    "identity": { "$ref": "#/$defs/identity" },
+    "documents": { "$ref": "#/$defs/documents" },
+    "well_known": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/wellKnownEntry" }
+    },
+    "apis": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/apiEntry" }
+    },
+    "agents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/agentEntry" }
+    },
+    "resources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resource" }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capability" },
+      "description": "Deduplicated union of every Resource's capabilities, intent-only."
+    },
+    "trust": { "$ref": "#/$defs/trust" }
+  },
+  "patternProperties": {
+    "^x-": {
+      "description": "Vendor/experimental extension key. The unprefixed namespace is reserved for the specification."
+    }
+  },
+  "additionalProperties": false,
+
+  "$defs": {
+    "site": {
+      "type": "object",
+      "description": "Identity of the site as a whole. Any field MAY be an empty string if unknown.",
+      "required": ["name", "url", "description", "lang", "logo"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "description": { "type": "string" },
+        "lang": { "type": "string" },
+        "logo": { "type": "string" }
+      }
+    },
+
+    "identity": {
+      "type": "object",
+      "description": "The person or organization behind the site.",
+      "required": ["type", "name", "role", "about", "url", "same_as", "contacts"],
+      "properties": {
+        "type": { "enum": ["person", "organization"] },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "about": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "same_as": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Profile URLs (sameAs)."
+        },
+        "contacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["type", "value"],
+            "properties": {
+              "type": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "documents": {
+      "type": "object",
+      "description": "Links to enabled document generators. Keys are present only when their generator is enabled.",
+      "properties": {
+        "sitemap": { "type": "string" },
+        "robots": { "type": "string" },
+        "llms": { "type": "string" },
+        "llms_full": { "type": "string" },
+        "security": { "type": "string" }
+      }
+    },
+
+    "wellKnownEntry": {
+      "type": "object",
+      "required": ["name", "url", "source"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "source": {
+          "enum": ["file", "managed", "generated"],
+          "description": "file = real file on disk; managed = plugin-registered; generated = minted by the engine."
+        }
+      }
+    },
+
+    "apiEntry": {
+      "type": "object",
+      "description": "One machine-callable endpoint. A public and an authenticated endpoint on the same Resource appear as two entries under the same id (per-endpoint auth wins).",
+      "required": ["id", "type", "base", "schema", "auth"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["rest", "graphql", "openapi", "soap", "rpc"] },
+        "base": { "type": "string", "format": "uri" },
+        "schema": { "type": "string" },
+        "auth": {
+          "type": "object",
+          "required": ["type", "docs"],
+          "properties": {
+            "type": { "$ref": "#/$defs/authScheme" },
+            "docs": { "type": "string" }
+          }
+        }
+      }
+    },
+
+    "agentEntry": {
+      "type": "object",
+      "description": "A2A-style agent descriptor derived from a Resource's agent fragment, with id and card appended.",
+      "required": ["name", "endpoint", "id", "card"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skill" }
+        },
+        "endpoint": { "type": "string" },
+        "auth": { "type": "string" },
+        "id": { "type": "string" },
+        "card": { "type": "string", "format": "uri" }
+      }
+    },
+
+    "resource": {
+      "type": "object",
+      "description": "A full, normalized Resource. The source of truth from which apis, agents, well_known, and capabilities are derived. Required fields per spec/04; unknown fields are tolerated.",
+      "required": ["id", "title", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9](-?[a-z0-9]+)*$",
+          "description": "Unique slug."
+        },
+        "title": { "type": "string" },
+        "type": { "$ref": "#/$defs/resourceType" },
+        "description": { "type": "string" },
+        "version": { "type": "string" },
+        "capabilities": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/capability" }
+        },
+        "endpoints": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/endpoint" }
+        },
+        "schemas": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "auth": { "$ref": "#/$defs/auth" },
+        "well_known": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "agent": { "$ref": "#/$defs/agentCard" },
+        "docs": { "type": "string" },
+        "provider": {
+          "type": "object",
+          "required": ["plugin"],
+          "properties": {
+            "plugin": {
+              "type": "string",
+              "description": "Auto-attributed by the collector via backtrace; author-supplied values are overwritten."
+            }
+          }
+        }
+      }
+    },
+
+    "endpoint": {
+      "type": "object",
+      "required": ["url", "type"],
+      "properties": {
+        "url": { "type": "string" },
+        "type": { "enum": ["rest", "graphql", "mcp", "openapi", "a2a", "soap", "rpc"] },
+        "methods": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "auth": {
+          "type": "string",
+          "description": "Auth scheme name; per-endpoint auth wins over the Resource-level auth when deriving apis[]."
+        },
+        "description": { "type": "string" }
+      }
+    },
+
+    "auth": {
+      "type": "object",
+      "description": "Resource-level auth. Defaults to {type:\"none\"}.",
+      "required": ["type"],
+      "properties": {
+        "type": { "$ref": "#/$defs/authScheme" },
+        "oidc": { "type": "string", "description": "OIDC discovery URL where relevant." },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "docs": { "type": "string" }
+      }
+    },
+
+    "agentCard": {
+      "type": "object",
+      "description": "A2A-style agent fragment declared on a Resource.",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "skills": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/skill" }
+        },
+        "endpoint": { "type": "string" },
+        "auth": { "type": "string" }
+      }
+    },
+
+    "skill": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+
+    "trust": {
+      "type": "object",
+      "description": "Minimal in wire-format 1.0; reserved for future signed/attested fields (jwks_uri, DID, JWS).",
+      "properties": {
+        "security_txt": { "type": "string" },
+        "policy": { "type": "string" }
+      }
+    },
+
+    "authScheme": {
+      "enum": ["none", "apikey", "basic", "oauth2", "oidc", "custom"]
+    },
+
+    "resourceType": {
+      "anyOf": [
+        {
+          "enum": [
+            "content", "commerce", "scheduling", "courses", "forms", "crm",
+            "auth", "search", "media", "messaging", "analytics", "payments",
+            "directory", "agent"
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^x-[a-z0-9]+-[a-z0-9-]+$",
+          "description": "x-<vendor>-<name> extension token."
+        }
+      ]
+    },
+
+    "capability": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+(\\.[a-z0-9_-]+)+$",
+      "description": "Dot-notation intent token, e.g. commerce.products.read. Intent only — no URLs or endpoint paths."
+    }
+  }
+}

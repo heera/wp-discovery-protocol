@@ -1,0 +1,21 @@
+{
+  "name": "Example Site",
+  "description": "Agent card for Example Site, derived from its WP_Discovery Discovery Document.",
+  "url": "https://example.com/",
+  "provider": { "organization": "Example Site", "url": "https://example.com/" },
+  "agents": [
+    {
+      "name": "Store Agent",
+      "description": "Browse the catalogue and build a cart via the WooCommerce Store API.",
+      "skills": [
+        { "id": "search_products", "description": "Search and list products." },
+        { "id": "get_product", "description": "Fetch a single product by id or slug." },
+        { "id": "add_to_cart", "description": "Add an item to the cart." }
+      ],
+      "endpoint": "https://example.com/wp-json/wc/store/v1",
+      "auth": "none",
+      "id": "woocommerce",
+      "card": "https://example.com/.well-known/agent-card.json#woocommerce"
+    }
+  ]
+}
