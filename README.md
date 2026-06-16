@@ -1,5 +1,8 @@
 # WP_Discovery Protocol Specification
 
+[![JSON Schema – wire-format 1.0](https://img.shields.io/badge/JSON_Schema-wire--format_1.0-1f7a63?logo=json&logoColor=white)](https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json)
+[![Conformance – MUST/SHOULD/MAY](https://img.shields.io/badge/conformance-MUST%2FSHOULD%2FMAY-1f7a63)](spec/07-conformance.md)
+
 > **Status:** Draft · Specification document **v0.1.0** · Discovery Document wire-format **1.0**
 > **Type:** RFC-*style* design document (in the sense of React RFCs, Rust RFCs, and Kubernetes design docs) — **not** an IETF RFC and **not** an internet standard.
 > **Initiated by:** Sheikh Heera · **Reference implementation:** [Agentify](https://github.com/heera/agentify) (WordPress plugin)
