@@ -184,6 +184,15 @@
           "type": "array",
           "items": { "$ref": "#/$defs/capability" }
         },
+        "abilities": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Names of WP Abilities API units that execute the intent in capabilities."
+        },
+        "tools": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/tool" }
+        },
         "endpoints": {
           "type": "array",
           "items": { "$ref": "#/$defs/endpoint" }
@@ -267,6 +276,25 @@
       "properties": {
         "id": { "type": "string" },
         "description": { "type": "string" }
+      }
+    },
+
+    "tool": {
+      "type": "object",
+      "description": "MCP-shaped tool definition, typically projected from the WordPress Abilities API. Mirrors the MCP tools/list shape.",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "Tool name; \"name\" or \"namespace/name\"." },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "inputSchema": { "type": "object" },
+        "outputSchema": { "type": "object" },
+        "annotations": {
+          "type": "object",
+          "description": "Behaviour hints (readOnlyHint, destructiveHint, idempotentHint, …).",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "auth": { "type": "string" }
       }
     },
 

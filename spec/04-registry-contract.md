@@ -53,6 +53,8 @@ One registered thing = one **Resource**. The schema is frozen at wire-format `1.
 | `description` | string | optional | One sentence. |
 | `version` | string | optional | Provider/resource version (e.g. `"9.4.1"`). |
 | `capabilities` | string[] | optional | Dot-notation intent verbs, e.g. `commerce.products.read`. See [03-capability-model.md](03-capability-model.md). |
+| `abilities` | string[] | optional | Names of **WordPress Abilities API** units (`wp_get_abilities()`) that *execute* the intent in `capabilities` — the executable bridge, not the intent itself. See [03-capability-model.md](03-capability-model.md). |
+| `tools` | Tool[] | optional | MCP-shaped tool definitions, typically *projected* from the Abilities registry rather than hand-authored. |
 | `endpoints` | Endpoint[] | optional | A bare string shorthand coerces to `{url, type:"rest"}`. |
 | `schemas` | string[] | optional | URLs to OpenAPI / JSON-Schema / GraphQL SDL documents. |
 | `auth` | Auth | optional | Defaults to `{type:"none"}`. |
@@ -95,6 +97,14 @@ Defaults to `{ type: "none" }`. The `oidc` field carries an OIDC discovery URL w
 ```
 
 A Resource carrying an `agent` fragment is surfaced under the envelope's `agents[]` and contributes to the standalone `agent-card.json`. The example's Store Agent declares three skills: `search_products`, `get_product`, `add_to_cart`.
+
+### Tool
+
+```
+{ name (REQUIRED; "name" or "namespace/name"), title, description, inputSchema (JSON Schema), outputSchema (JSON Schema), annotations: { readOnlyHint, destructiveHint, idempotentHint, … : bool }, auth (scheme name) }
+```
+
+Mirrors the MCP `tools/list` shape. Tools belong to the *executable* layer beneath the intent expressed in `capabilities` (see [03-capability-model.md](03-capability-model.md)); the reference implementation projects them from the WordPress Abilities API rather than expecting authors to hand-write them.
 
 ### WellKnown (referenced)
 

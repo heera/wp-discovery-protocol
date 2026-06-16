@@ -41,6 +41,24 @@ Concrete endpoint paths live **only** in a Resource's `endpoints` field — neve
 
 The URL `/wp-json/wc/v3/products` belongs in `endpoints[].url`; the intent `commerce.products.read` belongs in `capabilities`. A consumer matches on the capability and *then* looks up the endpoint(s) that realize it.
 
+## Not WordPress capabilities, and not the Abilities API
+
+A WP_Discovery **capability** is a *site-level intent token for external consumers*. The term is chosen deliberately: in the ecosystem that reads this document — A2A Agent Cards, MCP, OAuth/OIDC discovery, LSP — **capabilities** is the established word for "what a system can do." It sits at a different layer from two WordPress concepts it is easily confused with, and is **not** a replacement for either:
+
+- **WordPress role/user capabilities** (`edit_posts`, `manage_options`, …) are a *runtime authorization* model — "may *this user* do X?", checked with `current_user_can()`. A WP_Discovery capability answers "what can *this site* do?", carries no user or role binding, and grants nothing — it is descriptive, never enforced. The two cannot even collide as values: a WP_Discovery capability MUST contain a dot, so a flat cap like `edit_posts` is not a valid token.
+- **The WordPress Abilities API** (`wp_get_abilities()`) registers concrete, *executable units*. WP_Discovery does not compete with it — it **consumes** it. A Resource's separate `abilities` field (see [04-registry-contract.md](04-registry-contract.md)) names the Abilities-API units that *execute* the intent its `capabilities` describe, and an implementation MAY project those units into MCP `tools`.
+
+The layering, top to bottom:
+
+| Layer | Field / API | Answers |
+|---|---|---|
+| Intent (this document) | `capabilities` | what the site can do |
+| Executable unit | `abilities` (WP Abilities API) | what core can run |
+| Callable tool | `tools` (MCP) | how an agent invokes it |
+| Authorization | WordPress role caps | whether a given user may |
+
+`capabilities`, `abilities`, and `tools` are three distinct fields on a Resource, not synonyms — conflating them is a modelling error.
+
 ## Suggested namespaces
 
 The following namespaces are RECOMMENDED for common domains. They mirror the controlled `type` vocabulary of the Resource schema (see [04-registry-contract.md](04-registry-contract.md)) but are not exhaustive:
