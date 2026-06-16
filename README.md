@@ -31,7 +31,7 @@ Plugin → Capability Declaration → WP_Discovery Registry → Normalized Disco
 A site (or the plugin that powers it) is **WP_Discovery compliant** when it:
 
 1. Exposes a valid `/.well-known/discovery.json` containing the required envelope keys (see [conformance](spec/07-conformance.md));
-2. Implements the registry and the `agentify_discovery_register` hook so any plugin can declare capabilities; and
+2. Implements the registry and the `wp_discovery_register` hook so any plugin can declare capabilities; and
 3. Advertises the document with a `Link: …; rel="discovery"` header.
 
 See [spec/07-conformance.md](spec/07-conformance.md) for the full MUST/SHOULD/MAY checklist and the **WP_Discovery compliant** badge concept.

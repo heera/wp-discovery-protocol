@@ -9,7 +9,7 @@ The corresponding executable assertions are in [tests/conformance-tests.md](../t
 A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 
 1. exposes a valid `/.well-known/discovery.json` carrying the required envelope keys;
-2. implements the Registry and the `agentify_discovery_register` hook so any provider may declare capabilities; and
+2. implements the Registry and the `wp_discovery_register` hook so any provider may declare capabilities; and
 3. advertises the document with a `Link: …; rel="discovery"` header.
 
 ## MUST (required for compliance)
@@ -17,7 +17,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **M1.** The site MUST expose `/.well-known/discovery.json` as valid JSON.
 - **M2.** The document MUST contain the eleven **core** top-level keys — `$schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust`. A producer SHOULD serialize them in that (canonical) order, but a consumer MUST NOT depend on key order — member order is not significant and is not enforced. The document MAY append additional **extension** keys, each `x-`-prefixed (e.g. `x-agentify-mcp`); the unprefixed namespace is reserved for the core. A consumer MUST ignore any top-level key it does not recognize, which is what lets the wire-format grow without a version bump.
 - **M3.** `spec_version` MUST be `"1.0"` and `$schema` MUST point at the matching wire-format schema URL.
-- **M4.** The engine MUST implement the Registry and fire the `agentify_discovery_register` action, passing the Registry object so providers can call `register()`.
+- **M4.** The engine MUST implement the Registry and fire the canonical `wp_discovery_register` action, passing the Registry object so providers can call `register()`. It MAY additionally fire a product-branded alias for back-compat.
 - **M5.** The engine MUST validate registrations synchronously and reject invalid entries with a reason (surfaced to the admin Validation screen / `validate` route).
 - **M6.** The engine MUST auto-attribute each Resource's `provider` via backtrace, overwriting any author-supplied value.
 - **M7.** `capabilities` MUST be the deduplicated union of all Resources' capabilities, in dot-notation, free of URLs or implementation detail.

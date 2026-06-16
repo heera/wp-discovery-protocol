@@ -6,12 +6,12 @@ This section specifies how providers declare Resources, the full Resource schema
 Plugin → Capability Declaration → WP_Discovery Registry → Normalized Discovery Model → /.well-known/discovery.json → AI / Agents / Systems
 ```
 
-## Registration: the `agentify_discovery_register` hook
+## Registration: the `wp_discovery_register` hook
 
-A provider registers by hooking the `agentify_discovery_register` action. The Registry object is passed in. This creates **zero hard dependency**: if the WP_Discovery plugin is absent, the action simply never fires, and the provider needs no guard.
+A provider registers by hooking the canonical `wp_discovery_register` action; the Registry object is passed in. This creates **zero hard dependency**: if no WP_Discovery engine is active, the action simply never fires, and the provider needs no guard. The hook name is **vendor-neutral** — any conforming engine fires it, not just the reference implementation. An engine MAY *additionally* fire its own product-branded alias for back-compat (the reference implementation, Agentify, also fires `agentify_discovery_register`), but a provider SHOULD hook only the canonical `wp_discovery_register`.
 
 ```php
-add_action( 'agentify_discovery_register', function ( $registry ) {
+add_action( 'wp_discovery_register', function ( $registry ) {
     $registry->register([
         'id'           => 'acme-bookings',
         'title'        => 'Acme Bookings',
@@ -22,9 +22,9 @@ add_action( 'agentify_discovery_register', function ( $registry ) {
 } );
 ```
 
-### Global facade
+### Global facade (implementation-provided)
 
-An equivalent **global facade** is available for direct calls. Because this is a direct call rather than a hook, it MUST be guarded with `class_exists` (otherwise it would fatal when the plugin is absent):
+An engine MAY also expose an equivalent **global facade** for direct calls. Because a direct call would fatal when no engine is present, it MUST be guarded with `class_exists`. The facade's class name is **implementation-specific** — the reference implementation provides `Agentify_Discovery` (deliberately *not* `WP_Discovery`, to avoid the reserved `WP_` class prefix):
 
 ```php
 if ( class_exists('Agentify_Discovery') ) {
@@ -132,7 +132,7 @@ The collector fills `provider` automatically by inspecting the call stack (backt
 
 After collecting accepted Resources, the engine:
 
-1. **Collects** every Resource accepted during the `agentify_discovery_register` pass.
+1. **Collects** every Resource accepted during the `wp_discovery_register` pass.
 2. **Normalizes** each Resource: coerces string-shorthand endpoints to `{url, type:"rest"}`, absolutizes all URLs, applies `auth` defaults (`{type:"none"}`), and stamps `provider` via backtrace.
 3. **De-duplicates** capabilities into the envelope's flat `capabilities` union.
 4. **Merges** everything into the Discovery Model, then derives `apis[]`, `agents[]`, and `well_known[]` per the rules in [02-discovery-model.md](02-discovery-model.md) — including emitting one `apis[]` entry per qualifying endpoint so that a public and an authenticated endpoint on the same Resource appear separately.

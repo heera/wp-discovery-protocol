@@ -31,7 +31,7 @@ Plugin → Capability Declaration → WP_Discovery Registry → Normalized Disco
 ```
 
 1. **Plugin** — any provider on the site.
-2. **Capability Declaration** — the provider declares Resources (intent, in dot-notation) via the `agentify_discovery_register` hook.
+2. **Capability Declaration** — the provider declares Resources (intent, in dot-notation) via the `wp_discovery_register` hook.
 3. **WP_Discovery Registry** — validates each declaration synchronously and collects accepted entries.
 4. **Normalized Discovery Model** — the collector coerces shorthand, absolutizes URLs, auto-attributes the provider plugin, de-duplicates capabilities, and merges everything.
 5. **`/.well-known/discovery.json`** — the single document served to consumers.

@@ -15,7 +15,7 @@ The key words below are to be interpreted as described in [RFC 2119](https://www
 ## Glossary
 
 **Registry**
-: The server-side object provided by WP_Discovery to which providers submit their declarations. Providers obtain it through the `agentify_discovery_register` action hook (or the `WP_Discovery` facade). Its canonical registration method is `register()`; `add()` is a retained alias. The Registry validates each submission synchronously and collects accepted entries for aggregation.
+: The server-side object provided by WP_Discovery to which providers submit their declarations. Providers obtain it through the `wp_discovery_register` action hook (or an optional implementation-provided direct-call facade). Its canonical registration method is `register()`; `add()` is a retained alias. The Registry validates each submission synchronously and collects accepted entries for aggregation.
 
 **Resource**
 : One registered "thing" — a self-contained unit describing a feature a site exposes (a store, a booking system, a course catalog, etc.). The Resource schema is the central data structure of the protocol and is frozen at wire-format `1.0`. See [spec/04-registry-contract.md](spec/04-registry-contract.md).
@@ -24,7 +24,7 @@ The key words below are to be interpreted as described in [RFC 2119](https://www
 : A dot-notation token expressing **intent**, for example `commerce.products.read` or `scheduling.booking.create`. A capability describes *what can be done*, never *which endpoint does it*. Concrete URLs live only in a Resource's `endpoints` field. See [spec/03-capability-model.md](spec/03-capability-model.md).
 
 **Provider**
-: A plugin (or theme, or custom code) that declares one or more Resources to the Registry. Providers depend on nothing: if WP_Discovery is absent, the `agentify_discovery_register` hook simply never fires and registration is silently skipped.
+: A plugin (or theme, or custom code) that declares one or more Resources to the Registry. Providers depend on nothing: if no WP_Discovery engine is active, the `wp_discovery_register` hook simply never fires and registration is silently skipped.
 
 **Consumer**
 : Any external party — AI agent, integration, crawler, or system — that reads the Discovery Document. Consumers **read only the discovery layer**; they do not query plugins to learn what a site can do.

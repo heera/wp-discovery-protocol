@@ -2,7 +2,7 @@
 
 ## WordPress-native today, general by design
 
-The WP_Discovery Protocol is **WordPress-native today.** Its registration contract is a WordPress action hook (`agentify_discovery_register`), its well-known routing is a WordPress front controller, and its reference implementation is a WordPress plugin. The protocol meets WordPress where it is.
+The WP_Discovery Protocol is **WordPress-native today.** Its registration contract is a WordPress action hook (`wp_discovery_register`), its well-known routing is a WordPress front controller, and its reference implementation is a WordPress plugin. The protocol meets WordPress where it is.
 
 At the same time, the protocol is **structurally general enough to become a broader CMS / web discovery standard later.** Nothing about the Discovery Document envelope, the Resource schema, the capability model, or the well-known endpoints is intrinsically tied to WordPress:
 
@@ -22,7 +22,7 @@ This specification is written for three audiences:
 
 ## In scope
 
-- The **registration contract**: the `agentify_discovery_register` hook, the `WP_Discovery` facade, the `register()` / `add()` methods, and synchronous validation.
+- The **registration contract**: the `wp_discovery_register` hook, an optional implementation-provided direct-call facade, the `register()` / `add()` methods, and synchronous validation.
 - The **Resource schema** (frozen at wire-format `1.0`) and its sub-objects: Endpoint, Auth, AgentCard, WellKnown.
 - The **aggregation rules**: collection, normalization, URL absolutization, provider auto-attribution, capability de-duplication, and merging.
 - The **Discovery Document envelope**: its eleven core top-level keys, their canonical serialization order, and the derivation rules that populate them.
