@@ -1,0 +1,32 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate schema, examples & consumer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install validator
+        run: pip install jsonschema
+
+      - name: Validate examples against the JSON Schema (strict)
+        run: python tools/validate_examples.py
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Reference consumer conforms on the canonical example
+        run: node clients/wpd-inspect/wpd-inspect.mjs examples/discovery.json

@@ -1,5 +1,6 @@
 # WP_Discovery Protocol Specification
 
+[![ci](https://github.com/heera/wp-discovery-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/heera/wp-discovery-protocol/actions/workflows/ci.yml)
 [![JSON Schema – wire-format 1.0](https://img.shields.io/badge/JSON_Schema-wire--format_1.0-1f7a63?logo=json&logoColor=white)](https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json)
 [![Conformance – MUST/SHOULD/MAY](https://img.shields.io/badge/conformance-MUST%2FSHOULD%2FMAY-1f7a63)](spec/07-conformance.md)
 
@@ -49,6 +50,7 @@ See [spec/07-conformance.md](spec/07-conformance.md) for the full MUST/SHOULD/MA
 - [spec/07-conformance.md](spec/07-conformance.md) — conformance requirements
 - [examples/discovery.json](examples/discovery.json) — a complete valid Discovery Document
 - [schemas/README.md](schemas/README.md) — the Discovery Document JSON Schema, field by field
+- [clients/wpd-inspect/](clients/wpd-inspect/) — reference consumer + conformance-checker CLI
 - [implementations/wordpress-plugin/README.md](implementations/wordpress-plugin/README.md) — the reference implementation
 
 ## How to participate

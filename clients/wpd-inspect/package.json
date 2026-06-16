@@ -1,0 +1,10 @@
+{
+  "name": "wpd-inspect",
+  "version": "0.1.0",
+  "description": "Reference consumer + conformance checker for the WP_Discovery protocol.",
+  "type": "module",
+  "bin": { "wpd-inspect": "./wpd-inspect.mjs" },
+  "engines": { "node": ">=18" },
+  "license": "CC-BY-4.0",
+  "dependencies": {}
+}
