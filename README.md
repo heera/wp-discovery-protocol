@@ -2,7 +2,7 @@
 
 > **Status:** Draft · Specification document **v0.1.0** · Discovery Document wire-format **1.0**
 > **Type:** RFC-*style* design document (in the sense of React RFCs, Rust RFCs, and Kubernetes design docs) — **not** an IETF RFC and **not** an internet standard.
-> **Initiated by:** Sheikh Heera · **Reference implementation:** Agentify (WordPress plugin)
+> **Initiated by:** Sheikh Heera · **Reference implementation:** [Agentify](https://github.com/heera/agentify) (WordPress plugin)
 > **License:** [CC BY 4.0](LICENSE)
 
 The **WP_Discovery Protocol** defines a machine-readable *discovery layer* for WordPress sites so that AI agents, integrations, and crawlers can understand **what a site is**, **what it exposes**, and **how to interact with it** — without any prior knowledge of which plugins are installed.

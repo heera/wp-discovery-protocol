@@ -4,7 +4,7 @@ The canonical reference implementation of the WP_Discovery Protocol is the **Age
 
 ## Where it lives
 
-The Agentify plugin is maintained as a **separate project** — the *implementation* — distinct from this *specification* repository (the standard). Keeping the standard and its reference implementation in separate repositories lets the spec stay vendor-neutral while the plugin evolves on its own release cadence. Where the prose and the plugin disagree, that is a bug to be filed against one of them.
+The Agentify plugin is maintained as a **separate project** at **[github.com/heera/agentify](https://github.com/heera/agentify)** — the *implementation* — distinct from this *specification* repository (the standard). Keeping the standard and its reference implementation in separate repositories lets the spec stay vendor-neutral while the plugin evolves on its own release cadence. Where the prose and the plugin disagree, that is a bug to be filed against one of them.
 
 ## How the spec maps to the plugin
 
