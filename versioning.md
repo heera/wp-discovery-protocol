@@ -16,7 +16,7 @@ This is why a live envelope produced by a `v0.1.0` specification still declares:
 
 ```json
 {
-  "$schema": "https://heera.github.io/wp-discovery-protocol/schema/discovery/1.0.json",
+  "$schema": "https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json",
   "spec_version": "1.0"
 }
 ```

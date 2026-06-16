@@ -1,5 +1,5 @@
 {
-  "$schema": "https://heera.github.io/wp-discovery-protocol/schema/discovery/1.0.json",
+  "$schema": "https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json",
   "spec_version": "1.0",
   "site": { "name": "Example Site", "url": "https://example.com/", "description": "A WordPress site.", "lang": "en-US", "logo": "" },
   "identity": { "type": "person", "name": "Jane Dev", "role": "Software Developer", "about": "", "url": "https://example.com/", "same_as": [], "contacts": [ { "type": "email", "value": "mailto:jane@example.com" } ] },

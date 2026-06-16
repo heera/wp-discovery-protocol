@@ -24,7 +24,7 @@ Experimental or fast-moving surfaces SHOULD be served as their own well-known do
 
 ### `$schema` — string (URL)
 
-The JSON-Schema URL for the wire-format. For wire-format `1.0` this is `https://heera.github.io/wp-discovery-protocol/schema/discovery/1.0.json`.
+The JSON-Schema URL for the wire-format. For wire-format `1.0` this is `https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json`.
 
 ### `spec_version` — string
 

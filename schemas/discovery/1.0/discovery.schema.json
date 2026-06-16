@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://heera.github.io/wp-discovery-protocol/schema/discovery/1.0.json",
+  "$id": "https://heera.github.io/wp-discovery-protocol/schemas/discovery/1.0/discovery.schema.json",
   "title": "WP_Discovery Document",
   "description": "Wire-format 1.0 of the WP_Discovery Document served at /.well-known/discovery.json. Encodes the envelope defined in spec/02-discovery-model.md and the Resource contract in spec/04-registry-contract.md. The eleven core top-level keys are required and closed; forward-compatible extension keys MUST be 'x-'-prefixed (M2). Nested objects validate their known fields but tolerate unknown ones (must-ignore-unknown), so the format can grow without a version bump.",
   "type": "object",
