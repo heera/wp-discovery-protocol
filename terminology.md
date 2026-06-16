@@ -29,6 +29,12 @@ The key words below are to be interpreted as described in [RFC 2119](https://www
 **Consumer**
 : Any external party — AI agent, integration, crawler, or system — that reads the Discovery Document. Consumers **read only the discovery layer**; they do not query plugins to learn what a site can do.
 
+**Site Owner**
+: The administrator of the site running the engine. The owner is the **final authority over what the site advertises**: a Provider *proposes* Resources, the owner *disposes* of them. An implementation must let the owner suppress any Resource; a Provider cannot override that decision. Distinct from a Provider (who declares definitions) and a Consumer (who reads the result). See [spec/04-registry-contract.md](spec/04-registry-contract.md), "Owner authority."
+
+**Suppression / Publication Boundary**
+: The owner-controlled gate that decides whether an eligible Resource actually appears in served output. Suppression governs **advertisement, not access** — it removes a Resource from the published map but does not close the underlying endpoint, which stays as reachable as the host platform already makes it. Owner control is *inclusion* (publish / suppress), never *definition* (the Provider owns a Resource's fields).
+
 **Discovery Document**
 : The single, normalized JSON document that WP_Discovery aggregates from all registered Resources. It is served as `/.well-known/discovery.json` and carries `spec_version: "1.0"`. Its envelope has eleven core top-level keys, serialized in a canonical (recommended, non-significant) order. See [spec/02-discovery-model.md](spec/02-discovery-model.md).
 

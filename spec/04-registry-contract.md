@@ -136,3 +136,45 @@ After collecting accepted Resources, the engine:
 2. **Normalizes** each Resource: coerces string-shorthand endpoints to `{url, type:"rest"}`, absolutizes all URLs, applies `auth` defaults (`{type:"none"}`), and stamps `provider` via backtrace.
 3. **De-duplicates** capabilities into the envelope's flat `capabilities` union.
 4. **Merges** everything into the Discovery Model, then derives `apis[]`, `agents[]`, and `well_known[]` per the rules in [02-discovery-model.md](02-discovery-model.md) — including emitting one `apis[]` entry per qualifying endpoint so that a public and an authenticated endpoint on the same Resource appear separately.
+
+## Owner authority and the publication boundary
+
+Registration is a **proposal, not a guarantee of publication.** The **site owner** — not the provider — is the final authority over what an implementation advertises about their site. This boundary is what keeps a third-party plugin from publishing claims about a site the owner never consented to.
+
+An implementation:
+
+- **MUST** give the site owner a means to **suppress** any provider-registered Resource from *all* served output — the `/.well-known/discovery.json` envelope, any REST mirror of it, and any derived document (e.g. `llms.txt`). A suppressed Resource is absent everywhere, consistently.
+- **MUST NOT** let a provider prevent, detect, or override the owner's suppression. A provider's only contract is that a *valid* registration is *eligible* for publication.
+- **MUST NOT** require the owner to edit a provider's Resource *definition* (`capabilities`, `endpoints`, `auth`, …) in order to control publication. Owner control is **inclusion** (publish / suppress); the provider owns the **definition**. Suppression SHOULD therefore be stored as an opt-out keyed by Resource `id`, so it survives the provider later changing that Resource.
+- **SHOULD** surface each Resource's `provider` attribution in the owner-facing UI, so the publish/suppress decision is informed.
+
+### Default visibility
+
+Default publication state distinguishes **declared** surface from **inferred** surface:
+
+- A Resource **declared** through `wpdiscovery_register` (an explicit, intentional act by the provider) **SHOULD default to published.** Defaulting it off would silently nullify every integration until the owner discovers a control they have no reason to look for.
+- Where an implementation additionally **infers** surface it was never asked to register (e.g. auto-detecting REST namespaces and surfacing them without any `wpdiscovery_register` call), that inferred surface **SHOULD default to suppressed** (opt-in), because nothing declared intent and the inferred set is typically noisy.
+
+This asymmetry — *declared defaults visible, inferred defaults hidden* — is the recommended baseline.
+
+### Higher-risk resources
+
+An implementation **MAY** further default a *declared* Resource to **suppressed** when it advertises **state-changing or authenticated agent action** rather than read-only access — i.e. its `capabilities`, `abilities`, or `tools` describe mutation (creation, modification, deletion, payment) or any tool not marked `readOnlyHint`. Advertising an actionable, state-changing surface to autonomous agents is a consent decision an owner SHOULD make deliberately rather than inherit. Read-only Resources SHOULD retain the default-published baseline.
+
+### Advertisement, not access
+
+Suppression governs **advertisement, not access.** Removing a Resource from discovery hides it from the published map; it does **not** close the underlying endpoint, which remains exactly as reachable as the host platform already makes it. Owners and implementations MUST NOT treat the publication boundary as an access-control or privacy mechanism — that is the host platform's responsibility (see [06-security-model.md](06-security-model.md)).
+
+### Precedence
+
+The resulting authority order, combining this section with the aggregation rules above, is:
+
+```
+Owner curation         (publish / suppress)              — final; overrides everything below
+   ▲ overrides
+Provider declaration   (a registered Resource)           — overrides inferred surface for the same target
+   ▲ overrides
+Inferred surface       (implementation auto-discovery)   — fallback only; stands down when declared
+```
+
+Where an implementation both accepts registrations and infers surface, a provider's declared Resource for a given target (e.g. a REST namespace) **SHOULD** take precedence over the implementation's inferred surface for that same target — the inference stands down rather than producing a duplicate.

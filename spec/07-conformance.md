@@ -27,6 +27,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **M11.** The `apis[]` derivation MUST honor per-endpoint `auth` over resource-level `auth`, emitting one entry per qualifying endpoint.
 - **M12.** The `GET /wp-json/agentify/v1/validate` route MUST be admin-gated.
 - **M13.** The document MUST NOT expose secrets, credentials, or private plugin internals (see [06-security-model.md](06-security-model.md)).
+- **M14.** The engine MUST give the site owner a means to suppress any provider-registered Resource from all served output (envelope, REST mirror, derived documents), and MUST NOT let a provider prevent or override that suppression. Owner control is inclusion, not definition — the owner MUST NOT be required to edit a Resource's fields to suppress it (see [04-registry-contract.md](04-registry-contract.md), "Owner authority").
 
 ## SHOULD (recommended)
 
@@ -36,6 +37,9 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **S4.** Resources SHOULD use a `type` from the controlled vocabulary, falling back to `x-<vendor>-<name>` only when none fits.
 - **S5.** Capabilities SHOULD use a suggested namespace (`content.*`, `commerce.*`, …) where one applies.
 - **S6.** The site SHOULD populate `documents` with whatever generators are enabled (`sitemap`, `robots`, `llms`, `llms_full`).
+- **S7.** A Resource declared through `wpdiscovery_register` SHOULD default to published; surface the implementation merely *infers* (e.g. auto-detected REST namespaces) SHOULD default to suppressed (opt-in).
+- **S8.** Where an implementation both accepts registrations and infers surface, a provider's declared Resource for a given target SHOULD take precedence over the inferred surface for that same target (the inference stands down rather than duplicating).
+- **S9.** The owner-facing UI SHOULD surface each Resource's `provider` attribution so the publish/suppress decision is informed.
 
 ## MAY (optional)
 
@@ -44,6 +48,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **A3.** A Resource MAY declare an `agent` fragment to be surfaced under `agents[]`.
 - **A4.** The site MAY expose optional `security.txt`, `llms.txt`, and `llms-full.txt` documents.
 - **A5.** A future implementation MAY support scoped discovery and verifiable trust (signed documents, `jwks_uri`, DID, attestation) — none of which are part of wire-format `1.0`.
+- **A6.** An implementation MAY default a declared Resource to suppressed (opt-in) when it advertises state-changing or authenticated agent action (mutation, payment, or any tool not marked `readOnlyHint`) rather than read-only access.
 
 ## The "WP_Discovery compliant" badge
 
