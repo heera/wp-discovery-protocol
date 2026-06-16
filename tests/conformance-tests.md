@@ -5,8 +5,8 @@ This is a checklist of concrete, testable assertions a WP_Discovery implementati
 ## Discovery Document
 
 - [ ] **T1 — Reachable & valid JSON.** `GET /.well-known/discovery.json` returns HTTP 200 with `Content-Type: application/json`, and the body parses as JSON. *(M1)*
-- [ ] **T2 — All eleven keys, in order.** The parsed object's top-level keys are exactly, and in this order: `$schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust`. *(M2)*
-- [ ] **T3 — Version markers.** `spec_version === "1.0"` and `$schema` ends with `/discovery/1.0.json`. *(M3)*
+- [ ] **T2 — Core keys present.** The parsed object contains the eleven core top-level keys (`$schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust`); any other top-level key is `x-`-prefixed. Key order is *not* asserted. *(M2)*
+- [ ] **T3 — Version markers.** `spec_version === "1.0"` and `$schema` ends with `/discovery/1.0/discovery.schema.json`. *(M3)*
 
 ## Capabilities
 

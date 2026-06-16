@@ -29,7 +29,7 @@ A change is **breaking** — and therefore requires a **major** wire-format bump
 
 - **Renaming or removing a frozen Resource field** (`id`, `title`, `type`, `capabilities`, `endpoints`, `auth`, …).
 - **Renaming the registration hook** (`agentify_discovery_register`) or the Registry's canonical method (`register()`).
-- **Renaming or removing one of the eleven envelope keys**, or changing their fixed order.
+- **Renaming or removing one of the eleven core envelope keys.** (Reordering keys is *not* breaking — JSON member order is not significant and consumers key by name.)
 - Tightening a type or rule such that previously valid documents become invalid.
 
 A major bump changes the `spec_version` and the `$schema` URL (`.../discovery/2.0.json`).

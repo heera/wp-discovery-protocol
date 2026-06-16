@@ -93,6 +93,12 @@ x-acme-loyalty.points.write
 
 Consumers MUST NOT reject a Resource solely because it declares an `x-`-prefixed capability they do not recognize. Extension tokens are forward-compatible by construction and require no version bump (see [versioning.md](../versioning.md)).
 
+## Multiple resources, one capability
+
+The envelope's top-level `capabilities` is a **provider-agnostic union**: it answers "can this site do X?", not "who does X?". When more than one Resource declares the same token — e.g. both a store plugin and a subscriptions plugin expose `commerce.products.read` — the token appears **once** at the top level, while each Resource keeps its own entry under `resources[]`.
+
+This is intentional, and it is not a conflict the document resolves. The protocol **describes**; it does not **arbitrate**. A client that has settled on an intent treats the matching Resources as **alternatives** and disambiguates using their metadata — `provider`, `type`, `endpoints`, `auth`, `version`, `description` — or by asking a human. The specification deliberately does **not** designate a single "primary" handler for a capability: two Resources offering the same token may expose genuinely different data, and collapsing them would hide a real capability. A site that wishes to express a preference MAY do so with an `x-`-prefixed extension; the core stays descriptive.
+
 ## Rules summary
 
 - A capability MUST be a lowercase, dot-separated intent token.
@@ -100,3 +106,4 @@ Consumers MUST NOT reject a Resource solely because it declares an `x-`-prefixed
 - A capability SHOULD use a suggested namespace where one fits.
 - A vendor-specific capability SHOULD use the `x-<vendor>-` prefix.
 - The envelope's top-level `capabilities` MUST be the **deduplicated** union of all Resources' capabilities.
+- The top-level `capabilities` union is **provider-agnostic**; when multiple Resources declare the same token they are treated as alternatives, disambiguated by Resource metadata — the document does not name a primary handler.

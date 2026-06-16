@@ -30,7 +30,7 @@ The key words below are to be interpreted as described in [RFC 2119](https://www
 : Any external party — AI agent, integration, crawler, or system — that reads the Discovery Document. Consumers **read only the discovery layer**; they do not query plugins to learn what a site can do.
 
 **Discovery Document**
-: The single, normalized JSON document that WP_Discovery aggregates from all registered Resources. It is served as `/.well-known/discovery.json` and carries `spec_version: "1.0"`. Its envelope has exactly eleven top-level keys in a fixed order. See [spec/02-discovery-model.md](spec/02-discovery-model.md).
+: The single, normalized JSON document that WP_Discovery aggregates from all registered Resources. It is served as `/.well-known/discovery.json` and carries `spec_version: "1.0"`. Its envelope has eleven core top-level keys, serialized in a canonical (recommended, non-significant) order. See [spec/02-discovery-model.md](spec/02-discovery-model.md).
 
 **Well-Known Endpoint**
 : A URL under `/.well-known/` that the protocol serves through a front controller — chiefly `/.well-known/discovery.json`, plus the generated `/.well-known/agent-card.json` and its `/.well-known/agent.json` alias. Providers may register additional well-known documents (e.g. `security.txt`). A real file on disk always takes precedence. See [spec/05-well-known-endpoints.md](spec/05-well-known-endpoints.md).

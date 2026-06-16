@@ -4,15 +4,17 @@ The **Discovery Document** is the single, normalized JSON document that WP_Disco
 
 ## A note on versions (read this first)
 
-The Discovery Document carries `spec_version: "1.0"` and a `$schema` URL ending in `.../discovery/1.0.json`. The `1.0` here is the **frozen wire-format version of the Discovery Document**. It is **not** the same number as the specification document's status, which is **Experimental, v0.1**. These two numbers are different on purpose: `v0.1` describes the maturity of *this written specification*, while `1.0` describes the *stable on-the-wire shape* a consumer parses. See [versioning.md](../versioning.md).
+The Discovery Document carries `spec_version: "1.0"` and a `$schema` URL under `.../discovery/1.0/`. The `1.0` here is the **frozen wire-format version of the Discovery Document**. It is **not** the same number as the specification document's status, which is **Draft, v0.1.0**. These two numbers are different on purpose: `v0.1.0` describes the maturity of *this written specification*, while `1.0` describes the *stable on-the-wire shape* a consumer parses. See [versioning.md](../versioning.md).
 
-## Envelope: eleven core top-level keys, in this order
+## Envelope: eleven core top-level keys
 
-A conforming Discovery Document MUST contain these eleven **core** top-level keys, in exactly this order:
+A conforming Discovery Document MUST contain these eleven **core** top-level keys:
 
 ```
 $schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust
 ```
+
+A producer SHOULD serialize them in the order listed above — it is the **canonical** order used throughout this specification, and emitting it deterministically keeps documents readable and diff-friendly. A **consumer MUST NOT depend on key order**: it accesses members by name, JSON object member order is not significant, and JSON Schema cannot assert it. A document whose keys are reordered by a proxy, cache, or re-serializer is still conforming.
 
 The canonical example used throughout this specification is [examples/discovery.json](../examples/discovery.json). All prose below is grounded in that example.
 

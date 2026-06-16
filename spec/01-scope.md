@@ -25,7 +25,7 @@ This specification is written for three audiences:
 - The **registration contract**: the `agentify_discovery_register` hook, the `WP_Discovery` facade, the `register()` / `add()` methods, and synchronous validation.
 - The **Resource schema** (frozen at wire-format `1.0`) and its sub-objects: Endpoint, Auth, AgentCard, WellKnown.
 - The **aggregation rules**: collection, normalization, URL absolutization, provider auto-attribution, capability de-duplication, and merging.
-- The **Discovery Document envelope**: its eleven top-level keys, their fixed order, and the derivation rules that populate them.
+- The **Discovery Document envelope**: its eleven core top-level keys, their canonical serialization order, and the derivation rules that populate them.
 - The **well-known endpoints**: `/.well-known/discovery.json`, the generated `agent-card.json` and `agent.json` alias, the `add_well_known()` mechanism, real-file precedence, 404 behavior, the `rel="discovery"` Link header, and the REST `discovery` and `validate` routes.
 - The **capability model**: dot-notation, intent-not-implementation, suggested namespaces, and `x-` extension tokens.
 - The **security model** for what may and may not be exposed.

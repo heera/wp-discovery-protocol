@@ -12,8 +12,8 @@ This specification was **initiated by Sheikh Heera**, who currently serves as it
 
 Two version numbers appear throughout this document and are **deliberately different**:
 
-- **Specification document status: Experimental, v0.1.** The prose, structure, and requirements of this document may change.
-- **Discovery Document wire-format: 1.0.** The on-the-wire shape of the Discovery Document is frozen at `1.0`. This is why the envelope carries `spec_version: "1.0"` and a `$schema` URL ending in `.../discovery/1.0.json`, even though the specification document itself is only at `v0.1`.
+- **Specification document status: Draft, v0.1.0.** The prose, structure, and requirements of this document may change.
+- **Discovery Document wire-format: 1.0.** The on-the-wire shape of the Discovery Document is frozen at `1.0`. This is why the envelope carries `spec_version: "1.0"` and a `$schema` URL under `.../discovery/1.0/`, even though the specification document itself is only at `v0.1.0`.
 
 See [versioning.md](versioning.md) for the full rationale.
 

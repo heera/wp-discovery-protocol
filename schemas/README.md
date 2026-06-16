@@ -27,9 +27,9 @@ jsonschema.Draft202012Validator(json.load(open('schemas/discovery/1.0/discovery.
 .validate(json.load(open('examples/discovery.json')))" && echo OK
 ```
 
-## The envelope — 11 core keys (all required, in this order)
+## The envelope — 11 core keys (all required)
 
-Extra top-level keys are allowed **only** if `x-`-prefixed; anything else is rejected (`additionalProperties: false`).
+Shown in the canonical serialization order; consumers key by name, so member order isn't significant. Extra top-level keys are allowed **only** if `x-`-prefixed; anything else is rejected (`additionalProperties: false`).
 
 | Key | Type | Meaning |
 |---|---|---|
