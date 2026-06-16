@@ -41,7 +41,7 @@ This is a checklist of concrete, testable assertions a WP_Discovery implementati
 
 ## Registration & validation
 
-- [ ] **T17 — Hook fires with Registry.** The `wp_discovery_register` action fires and passes a Registry object exposing `register()` (and the `add()` alias). *(M4)*
+- [ ] **T17 — Hook fires with Registry.** The `wpdiscovery_register` action fires and passes a Registry object exposing `register()` (and the `add()` alias). *(M4)*
 - [ ] **T18 — Synchronous rejection.** Registering an invalid Resource (e.g. an `id` violating `^[a-z0-9](-?[a-z0-9]+)*$`, or a missing `title`) is rejected with a reason visible on the admin Validation screen / `validate` route. *(M5)*
 - [ ] **T19 — Provider auto-attribution.** A registered Resource's `provider.plugin` is set by the engine via backtrace, and an author-supplied `provider` value is overwritten. *(M6)*
 - [ ] **T20 — Unknown keys dropped.** A Resource submitted with an unrecognized top-level key is accepted with that key dropped and a warning recorded (not rejected).

@@ -28,7 +28,7 @@ The document maturity (`v0.1.0`) and the wire-format (`1.0`) are intentionally d
 A change is **breaking** — and therefore requires a **major** wire-format bump (e.g. `1.0 → 2.0`) — if it would invalidate a consumer that correctly parses the current format. Concretely, a breaking change is any of:
 
 - **Renaming or removing a frozen Resource field** (`id`, `title`, `type`, `capabilities`, `endpoints`, `auth`, …).
-- **Renaming the canonical registration hook** (`wp_discovery_register`) or the Registry's canonical method (`register()`).
+- **Renaming the canonical registration hook** (`wpdiscovery_register`) or the Registry's canonical method (`register()`).
 - **Renaming or removing one of the eleven core envelope keys.** (Reordering keys is *not* breaking — JSON member order is not significant and consumers key by name.)
 - Tightening a type or rule such that previously valid documents become invalid.
 

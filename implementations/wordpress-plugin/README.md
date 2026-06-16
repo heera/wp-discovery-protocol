@@ -10,7 +10,7 @@ The Agentify plugin is maintained as a **separate project** at **[github.com/hee
 
 | Specification concept | Plugin component |
 |---|---|
-| **Registry** ([04](../../spec/04-registry-contract.md)) | the **collector** — receives `wp_discovery_register` (and the `agentify_discovery_register` alias), exposes `register()` / `add()` and `add_well_known()`, validates synchronously, auto-attributes `provider` via backtrace |
+| **Registry** ([04](../../spec/04-registry-contract.md)) | the **collector** — receives `wpdiscovery_register` (and the `agentify_discovery_register` alias), exposes `register()` / `add()` and `add_well_known()`, validates synchronously, auto-attributes `provider` via backtrace |
 | **Discovery Document / envelope** ([02](../../spec/02-discovery-model.md)) | the **document generator** — normalizes Resources, derives `apis[]` / `agents[]` / `well_known[]` / `capabilities[]`, emits the eleven-key envelope |
 | **Well-Known endpoints** ([05](../../spec/05-well-known-endpoints.md)) | the **front controller** — serves `/.well-known/discovery.json`, mints `agent-card.json` + `agent.json`, enforces real-file-wins and clean 404s, adds the `rel="discovery"` Link header |
 | **Providers / adapters** ([04](../../spec/04-registry-contract.md)) | the **built-in providers** — bundled adapters that register Resources for popular plugins, e.g. **WooCommerce** (the `commerce` Resource in the example envelope) |
@@ -18,7 +18,7 @@ The Agentify plugin is maintained as a **separate project** at **[github.com/hee
 ## What you get out of the box
 
 - `/.well-known/discovery.json`, `/.well-known/agent-card.json`, and the `/.well-known/agent.json` alias.
-- The canonical `wp_discovery_register` action (plus the `agentify_discovery_register` back-compat alias) and the `Agentify_Discovery` facade.
+- The canonical `wpdiscovery_register` action (plus the `agentify_discovery_register` back-compat alias) and the `Agentify_Discovery` facade.
 - An **admin Validation screen** showing rejected registrations and their reasons.
 - REST routes: `GET /wp-json/agentify/v1/discovery` (public) and `GET /wp-json/agentify/v1/validate` (admin-only).
 - A `rel="discovery"` Link header on every front-end response.
@@ -27,7 +27,7 @@ The Agentify plugin is maintained as a **separate project** at **[github.com/hee
 ## Registering your own Resource
 
 ```php
-add_action( 'wp_discovery_register', function ( $registry ) {
+add_action( 'wpdiscovery_register', function ( $registry ) {
     $registry->register([
         'id'           => 'acme-bookings',
         'title'        => 'Acme Bookings',
@@ -38,7 +38,7 @@ add_action( 'wp_discovery_register', function ( $registry ) {
 } );
 ```
 
-No dependency guard is needed for the hook form: if no WP_Discovery engine is active, `wp_discovery_register` never fires. For the direct facade form, guard with `class_exists('Agentify_Discovery')`. See [04-registry-contract.md](../../spec/04-registry-contract.md).
+No dependency guard is needed for the hook form: if no WP_Discovery engine is active, `wpdiscovery_register` never fires. For the direct facade form, guard with `class_exists('Agentify_Discovery')`. See [04-registry-contract.md](../../spec/04-registry-contract.md).
 
 ## Conformance
 

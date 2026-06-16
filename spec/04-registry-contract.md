@@ -6,12 +6,12 @@ This section specifies how providers declare Resources, the full Resource schema
 Plugin → Capability Declaration → WP_Discovery Registry → Normalized Discovery Model → /.well-known/discovery.json → AI / Agents / Systems
 ```
 
-## Registration: the `wp_discovery_register` hook
+## Registration: the `wpdiscovery_register` hook
 
-A provider registers by hooking the canonical `wp_discovery_register` action; the Registry object is passed in. This creates **zero hard dependency**: if no WP_Discovery engine is active, the action simply never fires, and the provider needs no guard. The hook name is **vendor-neutral** — any conforming engine fires it, not just the reference implementation. An engine MAY *additionally* fire its own product-branded alias for back-compat (the reference implementation, Agentify, also fires `agentify_discovery_register`), but a provider SHOULD hook only the canonical `wp_discovery_register`.
+A provider registers by hooking the canonical `wpdiscovery_register` action; the Registry object is passed in. This creates **zero hard dependency**: if no WP_Discovery engine is active, the action simply never fires, and the provider needs no guard. The hook name is **vendor-neutral** — any conforming engine fires it, not just the reference implementation. An engine MAY *additionally* fire its own product-branded alias for back-compat (the reference implementation, Agentify, also fires `agentify_discovery_register`), but a provider SHOULD hook only the canonical `wpdiscovery_register`.
 
 ```php
-add_action( 'wp_discovery_register', function ( $registry ) {
+add_action( 'wpdiscovery_register', function ( $registry ) {
     $registry->register([
         'id'           => 'acme-bookings',
         'title'        => 'Acme Bookings',
@@ -132,7 +132,7 @@ The collector fills `provider` automatically by inspecting the call stack (backt
 
 After collecting accepted Resources, the engine:
 
-1. **Collects** every Resource accepted during the `wp_discovery_register` pass.
+1. **Collects** every Resource accepted during the `wpdiscovery_register` pass.
 2. **Normalizes** each Resource: coerces string-shorthand endpoints to `{url, type:"rest"}`, absolutizes all URLs, applies `auth` defaults (`{type:"none"}`), and stamps `provider` via backtrace.
 3. **De-duplicates** capabilities into the envelope's flat `capabilities` union.
 4. **Merges** everything into the Discovery Model, then derives `apis[]`, `agents[]`, and `well_known[]` per the rules in [02-discovery-model.md](02-discovery-model.md) — including emitting one `apis[]` entry per qualifying endpoint so that a public and an authenticated endpoint on the same Resource appear separately.
