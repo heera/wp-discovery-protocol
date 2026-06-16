@@ -48,6 +48,7 @@ See [spec/07-conformance.md](spec/07-conformance.md) for the full MUST/SHOULD/MA
 - [spec/05-well-known-endpoints.md](spec/05-well-known-endpoints.md) — `/.well-known` routing
 - [spec/07-conformance.md](spec/07-conformance.md) — conformance requirements
 - [examples/discovery.json](examples/discovery.json) — a complete valid Discovery Document
+- [schemas/README.md](schemas/README.md) — the Discovery Document JSON Schema, field by field
 - [implementations/wordpress-plugin/README.md](implementations/wordpress-plugin/README.md) — the reference implementation
 
 ## How to participate
