@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WP_Discovery Protocol</title>
+<meta name="description" content="A machine-readable discovery layer for WordPress — so AI agents, integrations, and crawlers can learn what a site is, what it exposes, and how to interact with it.">
+<style>
+  :root{
+    --paper:#f7f6f2; --ink:#1b1b1a; --muted:#6b6a64; --rule:#e3e1d9;
+    --accent:#1f7a63; --code-bg:#efece3;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:46rem; margin:0 auto; padding:clamp(2rem,6vw,5rem) 1.25rem 4rem}
+  header{border-bottom:1px solid var(--rule); padding-bottom:1.5rem; margin-bottom:2rem}
+  h1{
+    font-family:Georgia,"Times New Roman",serif; font-weight:600;
+    font-size:clamp(2rem,6vw,2.9rem); letter-spacing:-.01em; margin:0 0 .35rem;
+  }
+  h1 .u{color:var(--accent)}
+  .tagline{font-size:1.12rem; color:var(--muted); margin:0 0 1.1rem}
+  .chips{display:flex; flex-wrap:wrap; gap:.4rem .5rem; list-style:none; padding:0; margin:0}
+  .chips li{
+    font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    letter-spacing:.02em; text-transform:uppercase;
+    background:var(--code-bg); color:#444; border:1px solid var(--rule);
+    padding:.4rem .55rem; border-radius:999px;
+  }
+  h2{
+    font-family:Georgia,"Times New Roman",serif; font-weight:600;
+    font-size:1.25rem; margin:2.4rem 0 .6rem;
+  }
+  p{margin:0 0 1rem}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .pipe{
+    background:var(--code-bg); border:1px solid var(--rule); border-radius:8px;
+    padding:.9rem 1rem; margin:1.2rem 0; overflow-x:auto;
+    font:13px/1.7 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; color:#33322c;
+  }
+  code{
+    background:var(--code-bg); border:1px solid var(--rule); border-radius:5px;
+    padding:.08em .38em; font:13px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  .links{list-style:none; padding:0; margin:.5rem 0 0}
+  .links li{border-top:1px solid var(--rule); }
+  .links li:last-child{border-bottom:1px solid var(--rule)}
+  .links a{display:flex; align-items:baseline; gap:.75rem; padding:.85rem .2rem; color:var(--ink)}
+  .links a:hover{text-decoration:none; background:#fffdf7}
+  .links .name{font-weight:600}
+  .links .desc{color:var(--muted); font-size:.92rem}
+  .links .arrow{margin-left:auto; color:var(--accent)}
+  footer{margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.9rem}
+  footer a{color:var(--muted); text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>WP<span class="u">_</span>Discovery</h1>
+    <p class="tagline">A machine-readable discovery layer for WordPress.</p>
+    <ul class="chips">
+      <li>Draft</li>
+      <li>Spec v0.1.0</li>
+      <li>Wire-format 1.0</li>
+      <li>CC BY 4.0</li>
+    </ul>
+  </header>
+
+  <main>
+    <p>
+      <strong>WP_Discovery</strong> lets AI agents, integrations, and crawlers learn
+      <em>what a WordPress site is</em>, <em>what it exposes</em>, and <em>how to interact with it</em> —
+      without any prior knowledge of which plugins are installed.
+    </p>
+    <p>
+      Plugins declare their <strong>capabilities</strong> (intent, in dot-notation such as
+      <code>commerce.products.read</code>) through a registration hook. WP_Discovery collects,
+      validates, normalizes, and de-duplicates those declarations into a single document that
+      consumers read at a predictable URL — they never need to probe individual plugins.
+    </p>
+
+    <div class="pipe">Plugin&nbsp;→&nbsp;Capability Declaration&nbsp;→&nbsp;WP_Discovery Registry&nbsp;→&nbsp;Normalized Discovery Model&nbsp;→&nbsp;/.well-known/discovery.json&nbsp;→&nbsp;AI&nbsp;/&nbsp;Agents&nbsp;/&nbsp;Systems</div>
+
+    <h2>Read the protocol</h2>
+    <ul class="links">
+      <li><a href="https://github.com/heera/wp-discovery-protocol/blob/main/SPECIFICATION.md">
+        <span class="name">Specification</span>
+        <span class="desc">Master document &amp; table of contents</span>
+        <span class="arrow">↗</span></a></li>
+      <li><a href="https://github.com/heera/wp-discovery-protocol/blob/main/spec/02-discovery-model.md">
+        <span class="name">The Discovery Model</span>
+        <span class="desc">The document, field by field</span>
+        <span class="arrow">↗</span></a></li>
+      <li><a href="https://github.com/heera/wp-discovery-protocol/blob/main/spec/07-conformance.md">
+        <span class="name">Conformance</span>
+        <span class="desc">MUST / SHOULD / MAY checklist</span>
+        <span class="arrow">↗</span></a></li>
+    </ul>
+
+    <h2>Machine artifacts</h2>
+    <ul class="links">
+      <li><a href="schemas/discovery/1.0/discovery.schema.json">
+        <span class="name">JSON Schema (wire-format 1.0)</span>
+        <span class="desc">discovery.schema.json — served here</span>
+        <span class="arrow">↗</span></a></li>
+      <li><a href="https://github.com/heera/wp-discovery-protocol/blob/main/examples/discovery.json">
+        <span class="name">Example Discovery Document</span>
+        <span class="desc">A complete, valid discovery.json</span>
+        <span class="arrow">↗</span></a></li>
+    </ul>
+
+    <h2>Project</h2>
+    <ul class="links">
+      <li><a href="https://github.com/heera/wp-discovery-protocol">
+        <span class="name">Source repository</span>
+        <span class="desc">github.com/heera/wp-discovery-protocol</span>
+        <span class="arrow">↗</span></a></li>
+      <li><a href="https://github.com/heera/agentify">
+        <span class="name">Reference implementation — Agentify</span>
+        <span class="desc">WordPress plugin</span>
+        <span class="arrow">↗</span></a></li>
+    </ul>
+  </main>
+
+  <footer>
+    Initiated by Sheikh Heera · openly licensed under
+    <a href="https://github.com/heera/wp-discovery-protocol/blob/main/LICENSE">CC BY 4.0</a>.
+    An RFC-style design document — not an IETF RFC.
+  </footer>
+</div>
+</body>
+</html>
