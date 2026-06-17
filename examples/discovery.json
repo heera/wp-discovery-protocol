@@ -3,11 +3,11 @@
   "spec_version": "1.0",
   "site": { "name": "Example Site", "url": "https://example.com/", "description": "A WordPress site.", "lang": "en-US", "logo": "" },
   "identity": { "type": "person", "name": "Jane Dev", "role": "Software Developer", "about": "", "url": "https://example.com/", "same_as": [], "contacts": [ { "type": "email", "value": "mailto:jane@example.com" } ] },
-  "documents": { "sitemap": "https://example.com/wp-sitemap.xml", "robots": "https://example.com/robots.txt", "llms": "https://example.com/llms.txt", "llms_full": "https://example.com/llms-full.txt" },
+  "documents": { "sitemap": "https://example.com/wp-sitemap.xml", "robots": "https://example.com/robots.txt", "feed": "https://example.com/feed/", "llms": "https://example.com/llms.txt", "llms_full": "https://example.com/llms-full.txt" },
   "well_known": [
-    { "name": "discovery.json", "url": "https://example.com/.well-known/discovery.json", "source": "generated" },
-    { "name": "agent-card.json", "url": "https://example.com/.well-known/agent-card.json", "source": "generated" },
-    { "name": "agent.json", "url": "https://example.com/.well-known/agent.json", "source": "generated" }
+    { "name": "discovery.json", "url": "https://example.com/.well-known/discovery.json", "source": "generated", "spec": "WP Discovery" },
+    { "name": "agent-card.json", "url": "https://example.com/.well-known/agent-card.json", "source": "generated", "spec": "A2A" },
+    { "name": "agent.json", "url": "https://example.com/.well-known/agent.json", "source": "generated", "spec": "A2A (legacy)" }
   ],
   "apis": [
     { "id": "woocommerce", "type": "rest", "base": "https://example.com/wp-json/wc/store/v1", "schema": "", "auth": { "type": "none", "docs": "https://woocommerce.github.io/woocommerce-rest-api-docs/" } },

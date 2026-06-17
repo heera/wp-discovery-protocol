@@ -6,6 +6,15 @@ The **Discovery Document** is the single, normalized JSON document that WP_Disco
 
 The Discovery Document carries `spec_version: "1.0"` and a `$schema` URL under `.../discovery/1.0/`. The `1.0` here is the **frozen wire-format version of the Discovery Document**. It is **not** the same number as the specification document's status, which is **Draft, v0.1.0**. These two numbers are different on purpose: `v0.1.0` describes the maturity of *this written specification*, while `1.0` describes the *stable on-the-wire shape* a consumer parses. See [versioning.md](../versioning.md).
 
+## Document identity: the `$schema` is canonical, the path is not
+
+A Discovery Document is identified by its **`$schema`** and **`spec_version`** — not by the URL it was retrieved from. The well-known path `/.well-known/discovery.json` is the conventional, RECOMMENDED location, and a conforming *site* MUST expose the document there (see [05-well-known-endpoints.md](05-well-known-endpoints.md)) — but the path is **not** the document's identity.
+
+- A consumer **MUST** confirm it is reading a WP_Discovery document by inspecting `$schema` (and select its parser on `spec_version`); it **MUST NOT** assume that arbitrary JSON served at `/.well-known/discovery.json` is one. A document that is mirrored, proxied, cached, or embedded elsewhere is still a Discovery Document if its `$schema` says so.
+- A producer **MAY** serve the same document at additional locations — a REST mirror, a CDN copy, an embedded fragment — each carrying the same `$schema`/`spec_version` and equally valid.
+
+This is what makes the chosen filename a non-issue. The protocol does **not** depend on owning the generic `discovery.json` name in any registry: two unrelated documents could occupy the same path and a consumer still tells them apart by `$schema`. Implementations and consumers SHOULD therefore treat `$schema` as the stable contract and the path as a convenience. (The same principle applies one layer down: the REST mirror's namespace is implementation-specific and is *discovered through the document*, never hard-coded — see [05-well-known-endpoints.md](05-well-known-endpoints.md).)
+
 ## Envelope: eleven core top-level keys
 
 A conforming Discovery Document MUST contain these eleven **core** top-level keys:
@@ -57,10 +66,10 @@ The person or organization behind the site:
 Links to enabled document generators:
 
 ```json
-"documents": { "sitemap": "https://example.com/wp-sitemap.xml", "robots": "https://example.com/robots.txt", "llms": "https://example.com/llms.txt", "llms_full": "https://example.com/llms-full.txt" }
+"documents": { "sitemap": "https://example.com/wp-sitemap.xml", "robots": "https://example.com/robots.txt", "feed": "https://example.com/feed/", "llms": "https://example.com/llms.txt", "llms_full": "https://example.com/llms-full.txt" }
 ```
 
-Keys correspond to enabled generators: `sitemap`, `robots`, `llms` (llms.txt), `llms_full` (llms-full.txt), and `security` where present.
+Keys are document names → URLs. The engine emits `sitemap`, `robots`, and `feed` (the site's RSS feed) unconditionally; the `llms` (llms.txt) and `llms_full` (llms-full.txt) pair when those generators are enabled; and `humans` (humans.txt) / `security` (security.txt) where present. The set is **open**: an implementation MAY add further standard documents (e.g. `openapi`, a web-app `manifest`), so a consumer MUST treat `documents` as an extensible name→URL map, not a fixed set. Empty values are omitted.
 
 ### `well_known` — array
 
@@ -68,13 +77,13 @@ Every well-known document the site serves, each `{name, url, source}`:
 
 ```json
 "well_known": [
-  { "name": "discovery.json", "url": "https://example.com/.well-known/discovery.json", "source": "generated" },
-  { "name": "agent-card.json", "url": "https://example.com/.well-known/agent-card.json", "source": "generated" },
-  { "name": "agent.json", "url": "https://example.com/.well-known/agent.json", "source": "generated" }
+  { "name": "discovery.json", "url": "https://example.com/.well-known/discovery.json", "source": "generated", "spec": "WP Discovery" },
+  { "name": "agent-card.json", "url": "https://example.com/.well-known/agent-card.json", "source": "generated", "spec": "A2A" },
+  { "name": "agent.json", "url": "https://example.com/.well-known/agent.json", "source": "generated", "spec": "A2A (legacy)" }
 ]
 ```
 
-`source` is one of `file` (a real file on disk), `managed` (a plugin-registered document), or `generated` (minted by the engine).
+`source` is one of `file` (a real file on disk), `managed` (a plugin-registered document), or `generated` (minted by the engine). The OPTIONAL `spec` field labels the standard that governs the named document (e.g. `RFC 9116` for `security.txt`, `OpenID Connect Discovery` for `openid-configuration`, `A2A` for `agent-card.json`); it is present only for names the engine recognizes and is **absent — never fabricated** — for the rest. A consumer MUST treat `spec` as advisory.
 
 ### `apis` — array
 
@@ -127,11 +136,11 @@ In `1.0`, `trust` carries only `security_txt` and `policy`. The key is **reserve
 
 The engine MUST derive the document from the registered Resources as follows:
 
-- **`apis[]`** ← every Resource endpoint whose `type` ∈ `{rest, graphql, openapi, soap, rpc}`, emitted as `{id, type, base, schema, auth:{type, docs}}`. **Per-endpoint `auth` wins over resource-level `auth`**, so a public Store API and an authenticated admin API on the *same* Resource yield two distinct `apis[]` entries.
+- **`apis[]`** ← every Resource endpoint whose `type` ∈ `{rest, graphql, openapi, soap, rpc}`, emitted as `{id, type, base, schema, auth:{type, docs}}`. **Per-endpoint `auth` wins over resource-level `auth`**, so a public Store API and an authenticated admin API on the *same* Resource yield two distinct `apis[]` entries. When a Resource declares no explicit `auth.docs`, an implementation SHOULD fall back to the standard auth-metadata document for the scheme — OAuth 2.0 Authorization Server Metadata ([RFC 8414](https://www.rfc-editor.org/rfc/rfc8414)) or OpenID Connect Discovery — but only when the site actually serves one, so the link is never dead.
 - **`agents[]`** ← every Resource with an `agent` fragment. The same set assembles the standalone `agent-card.json`.
-- **`well_known[]`** ← the union of real files on disk (`source: "file"`), plugin-managed documents (`source: "managed"`), and generated documents (`source: "generated"`), each `{name, url, source}`.
+- **`well_known[]`** ← the union of real files on disk (`source: "file"`), plugin-managed documents (`source: "managed"`), and generated documents (`source: "generated"`), each `{name, url, source}` plus an OPTIONAL `spec` label for recognized names.
 - **`capabilities[]`** ← a deduplicated flatten of all Resources' `capabilities`.
-- **`documents[]`** ← the set of enabled generators (`llms.txt`, `llms-full.txt`, `sitemap`, `robots`, `security`).
+- **`documents`** ← a name→URL map: `sitemap`, `robots`, and `feed` always; `llms` / `llms_full` when enabled; `humans` / `security` when present; extensible with further standard documents.
 - **`trust`** ← minimal in `1.0` (`security_txt`, `policy`); reserved for future signed/attested fields.
 
 All URLs in the output are **absolutized**: providers MAY register site-relative URLs (`/wp-json/...`) and the collector rewrites them to absolute URLs in the served document. See [04-registry-contract.md](04-registry-contract.md) for normalization details.

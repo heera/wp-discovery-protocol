@@ -105,12 +105,14 @@
 
     "documents": {
       "type": "object",
-      "description": "Links to enabled document generators. Keys are present only when their generator is enabled.",
+      "description": "Document name -> URL links. sitemap/robots/feed are emitted unconditionally; llms/llms_full when enabled; humans/security when present. An open map (additionalProperties defaults to true) so implementations MAY add further standard documents (openapi, manifest, ...).",
       "properties": {
         "sitemap": { "type": "string" },
         "robots": { "type": "string" },
+        "feed": { "type": "string" },
         "llms": { "type": "string" },
         "llms_full": { "type": "string" },
+        "humans": { "type": "string" },
         "security": { "type": "string" }
       }
     },
@@ -124,6 +126,10 @@
         "source": {
           "enum": ["file", "managed", "generated"],
           "description": "file = real file on disk; managed = plugin-registered; generated = minted by the engine."
+        },
+        "spec": {
+          "type": "string",
+          "description": "Optional, advisory label for the standard that governs the named document (e.g. 'RFC 9116', 'OpenID Connect Discovery', 'A2A'). Present only for names the engine recognizes; never fabricated."
         }
       }
     },
