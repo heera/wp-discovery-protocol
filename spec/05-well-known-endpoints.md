@@ -59,9 +59,10 @@ Plugin-managed documents appear in the Discovery Document's `well_known[]` with 
 
 ## Advertised Link header
 
-On **every front-end response**, the site MUST advertise the Discovery Document with a Link header:
+On **every front-end response**, the site MUST advertise the Discovery Document with a Link header. It SHOULD use the registered `service-desc` relation ([RFC 8631](https://www.rfc-editor.org/rfc/rfc8631) — "a machine-readable description of the service") so standards-aware clients recognize it, and MAY additionally emit the protocol's own `discovery` relation:
 
 ```
+Link: <https://example.com/.well-known/discovery.json>; rel="service-desc"; type="application/json"
 Link: <https://example.com/.well-known/discovery.json>; rel="discovery"; type="application/json"
 ```
 
@@ -78,11 +79,14 @@ The engine also exposes the Discovery Model over the WordPress REST API:
 
 The `validate` route **MUST** be admin-gated; it is intended for continuous integration and operators, not anonymous consumers.
 
+The REST **namespace** (`agentify/v1`) is **implementation-specific** — `agentify` is the reference implementation's vendor prefix, not part of the protocol. A consumer SHOULD reach these routes via URLs the Discovery Document provides rather than hard-coding the namespace; the canonical, implementation-neutral entry point is always `/.well-known/discovery.json` (see [Document identity](02-discovery-model.md)).
+
 ## Optional documents
 
 A site MAY additionally expose conventional documents that the protocol references but does not define:
 
 - `/.well-known/security.txt` — surfaced in the envelope's `trust.security_txt` when present.
 - `/llms.txt` and `/llms-full.txt` — surfaced in the envelope's `documents`.
+- Standard **auth-metadata** documents — OAuth 2.0 Authorization Server Metadata ([RFC 8414](https://www.rfc-editor.org/rfc/rfc8414)) at `/.well-known/oauth-authorization-server`, OpenID Connect Discovery at `/.well-known/openid-configuration`, and OAuth 2.0 Protected Resource Metadata ([RFC 9728](https://www.rfc-editor.org/rfc/rfc9728)) at `/.well-known/oauth-protected-resource` — are **referenced, not served** by the engine. When the site publishes one, it is linked from the relevant `apis[].auth.docs` and, for a live MCP server, from the experimental MCP descriptor. The protocol points at these settled standards rather than defining its own auth-discovery handshake.
 
 See [02-discovery-model.md](02-discovery-model.md) for how these flow into the envelope, and [06-security-model.md](06-security-model.md) for what may safely be exposed.
