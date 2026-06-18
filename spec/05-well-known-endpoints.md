@@ -74,12 +74,12 @@ The engine also exposes the Discovery Model over the WordPress REST API:
 
 | Route | Access | Purpose |
 |---|---|---|
-| `GET /wp-json/agentify/v1/discovery` | public | The live Discovery Document envelope (same model as `/.well-known/discovery.json`). |
-| `GET /wp-json/agentify/v1/validate` | **admin-only** | Validation notices for CI — surfaces the same rejection reasons as the admin Validation screen. |
+| `GET /wp-json/agentomatic/v1/discovery` | public | The live Discovery Document envelope (same model as `/.well-known/discovery.json`). |
+| `GET /wp-json/agentomatic/v1/validate` | **admin-only** | Validation notices for CI — surfaces the same rejection reasons as the admin Validation screen. |
 
 The `validate` route **MUST** be admin-gated; it is intended for continuous integration and operators, not anonymous consumers.
 
-The REST **namespace** (`agentify/v1`) is **implementation-specific** — `agentify` is the reference implementation's vendor prefix, not part of the protocol. A consumer SHOULD reach these routes via URLs the Discovery Document provides rather than hard-coding the namespace; the canonical, implementation-neutral entry point is always `/.well-known/discovery.json` (see [Document identity](02-discovery-model.md)).
+The REST **namespace** (`agentomatic/v1`) is **implementation-specific** — `agentomatic` is the reference implementation's vendor prefix, not part of the protocol. A consumer SHOULD reach these routes via URLs the Discovery Document provides rather than hard-coding the namespace; the canonical, implementation-neutral entry point is always `/.well-known/discovery.json` (see [Document identity](02-discovery-model.md)).
 
 ## Optional documents
 

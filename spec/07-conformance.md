@@ -15,7 +15,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 ## MUST (required for compliance)
 
 - **M1.** The site MUST expose `/.well-known/discovery.json` as valid JSON.
-- **M2.** The document MUST contain the eleven **core** top-level keys — `$schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust`. A producer SHOULD serialize them in that (canonical) order, but a consumer MUST NOT depend on key order — member order is not significant and is not enforced. The document MAY append additional **extension** keys, each `x-`-prefixed (e.g. `x-agentify-mcp`); the unprefixed namespace is reserved for the core. A consumer MUST ignore any top-level key it does not recognize, which is what lets the wire-format grow without a version bump.
+- **M2.** The document MUST contain the eleven **core** top-level keys — `$schema, spec_version, site, identity, documents, well_known, apis, agents, resources, capabilities, trust`. A producer SHOULD serialize them in that (canonical) order, but a consumer MUST NOT depend on key order — member order is not significant and is not enforced. The document MAY append additional **extension** keys, each `x-`-prefixed (e.g. `x-agentomatic-mcp`); the unprefixed namespace is reserved for the core. A consumer MUST ignore any top-level key it does not recognize, which is what lets the wire-format grow without a version bump.
 - **M3.** `spec_version` MUST be `"1.0"` and `$schema` MUST point at the matching wire-format schema URL.
 - **M4.** The engine MUST implement the Registry and fire the canonical `wpdiscovery_register` action, passing the Registry object so providers can call `register()`. It MAY additionally fire a product-branded alias for back-compat.
 - **M5.** The engine MUST validate registrations synchronously and reject invalid entries with a reason (surfaced to the admin Validation screen / `validate` route).
@@ -25,7 +25,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **M9.** The `/.well-known/` front controller MUST NOT shadow a real file on disk; if a real file exists it MUST be served.
 - **M10.** An unknown flat `/.well-known/` name MUST return a clean 404 (not the homepage); nested paths MUST be left untouched.
 - **M11.** The `apis[]` derivation MUST honor per-endpoint `auth` over resource-level `auth`, emitting one entry per qualifying endpoint.
-- **M12.** The `GET /wp-json/agentify/v1/validate` route MUST be admin-gated.
+- **M12.** The `GET /wp-json/agentomatic/v1/validate` route MUST be admin-gated.
 - **M13.** The document MUST NOT expose secrets, credentials, or private plugin internals (see [06-security-model.md](06-security-model.md)).
 - **M14.** The engine MUST give the site owner a means to suppress any provider-registered Resource from all served output (envelope, REST mirror, derived documents), and MUST NOT let a provider prevent or override that suppression. Owner control is inclusion, not definition — the owner MUST NOT be required to edit a Resource's fields to suppress it (see [04-registry-contract.md](04-registry-contract.md), "Owner authority").
 
@@ -33,7 +33,7 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 
 - **S1.** The site SHOULD advertise `Link: <…/.well-known/discovery.json>; rel="discovery"; type="application/json"` on every front-end response.
 - **S2.** The engine SHOULD generate `/.well-known/agent-card.json` and the `/.well-known/agent.json` alias from Resources carrying an `agent` fragment.
-- **S3.** The engine SHOULD expose the live envelope at `GET /wp-json/agentify/v1/discovery`.
+- **S3.** The engine SHOULD expose the live envelope at `GET /wp-json/agentomatic/v1/discovery`.
 - **S4.** Resources SHOULD use a `type` from the controlled vocabulary, falling back to `x-<vendor>-<name>` only when none fits.
 - **S5.** Capabilities SHOULD use a suggested namespace (`content.*`, `commerce.*`, …) where one applies.
 - **S6.** The site SHOULD populate `documents` with whatever generators are enabled (`sitemap`, `robots`, `llms`, `llms_full`).
