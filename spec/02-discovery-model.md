@@ -29,7 +29,7 @@ The canonical example used throughout this specification is [examples/discovery.
 
 ### Extension keys
 
-A document MAY append **extension** keys after the core eleven. Every extension key MUST be `x-`-prefixed (e.g. `x-agentify-mcp`, `x-agentify-tools`) so it can never collide with a core key the specification adds later, and a consumer MUST ignore any top-level key it does not recognize — the *must-ignore-unknown* rule that keeps wire-format `1.0` forward-compatible. The unprefixed namespace is reserved for this specification.
+A document MAY append **extension** keys after the core eleven. Every extension key MUST be `x-`-prefixed (e.g. `x-agentomatic-mcp`, `x-agentomatic-tools`) so it can never collide with a core key the specification adds later, and a consumer MUST ignore any top-level key it does not recognize — the *must-ignore-unknown* rule that keeps wire-format `1.0` forward-compatible. The unprefixed namespace is reserved for this specification.
 
 Experimental or fast-moving surfaces SHOULD be served as their own well-known document rather than inlined here, so they can evolve without touching the frozen core. The reference implementation keeps its MCP descriptor and tool list at [/.well-known/mcp.json](05-well-known-endpoints.md) for exactly this reason, and emits only the core eleven keys in `discovery.json`.
 

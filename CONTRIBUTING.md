@@ -6,7 +6,7 @@ This specification evolves through an **RFC-style** process modeled on the React
 
 - Read [SPECIFICATION.md](SPECIFICATION.md), [terminology.md](terminology.md), and [versioning.md](versioning.md).
 - Check whether your idea is **additive** (new optional field, new `type` term, new generator) or **breaking** (renaming/removing a frozen field, the hook, or an envelope key). Breaking changes face a much higher bar — see [versioning.md](versioning.md).
-- Confirm the change is consistent with the reference implementation (the Agentify plugin). The specification describes **real, shipped behavior**, not aspiration.
+- Confirm the change is consistent with the reference implementation (the Agentomatic plugin). The specification describes **real, shipped behavior**, not aspiration.
 
 ## Proposal format
 
