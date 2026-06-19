@@ -8,7 +8,7 @@ Plugin → Capability Declaration → WP_Discovery Registry → Normalized Disco
 
 ## Registration: the `wpdiscovery_register` hook
 
-A provider registers by hooking the canonical `wpdiscovery_register` action; the Registry object is passed in. This creates **zero hard dependency**: if no WP_Discovery engine is active, the action simply never fires, and the provider needs no guard. The hook name is **vendor-neutral** — any conforming engine fires it, not just the reference implementation. An engine MAY *additionally* fire its own product-branded alias for back-compat (the reference implementation, Agentomatic, also fires `agentomatic_register`), but a provider SHOULD hook only the canonical `wpdiscovery_register`.
+A provider registers by hooking the canonical `wpdiscovery_register` action; the Registry object is passed in. This creates **zero hard dependency**: if no WP_Discovery engine is active, the action simply never fires, and the provider needs no guard. The hook name is **vendor-neutral** — any conforming engine fires it, not just the reference implementation. An engine MAY *additionally* fire its own product-branded alias for back-compat (the reference implementation, Agentimus, also fires `agentimus_register`), but a provider SHOULD hook only the canonical `wpdiscovery_register`.
 
 ```php
 add_action( 'wpdiscovery_register', function ( $registry ) {
@@ -24,11 +24,11 @@ add_action( 'wpdiscovery_register', function ( $registry ) {
 
 ### Global facade (implementation-provided)
 
-An engine MAY also expose an equivalent **global facade** for direct calls. Because a direct call would fatal when no engine is present, it MUST be guarded with `class_exists`. The facade's class name is **implementation-specific** — the reference implementation provides `Agentomatic_Discovery` (deliberately *not* `WP_Discovery`, to avoid the reserved `WP_` class prefix):
+An engine MAY also expose an equivalent **global facade** for direct calls. Because a direct call would fatal when no engine is present, it MUST be guarded with `class_exists`. The facade's class name is **implementation-specific** — the reference implementation provides `Agentimus_Discovery` (deliberately *not* `WP_Discovery`, to avoid the reserved `WP_` class prefix):
 
 ```php
-if ( class_exists('Agentomatic_Discovery') ) {
-    Agentomatic_Discovery::register([
+if ( class_exists('Agentimus_Discovery') ) {
+    Agentimus_Discovery::register([
         'id'    => 'acme-bookings',
         'title' => 'Acme Bookings',
         'type'  => 'scheduling',

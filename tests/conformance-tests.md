@@ -36,8 +36,8 @@ This is a checklist of concrete, testable assertions a WP_Discovery implementati
 
 ## REST routes
 
-- [ ] **T15 — Live envelope route.** `GET /wp-json/agentomatic/v1/discovery` returns the same model as `/.well-known/discovery.json`. *(S3)*
-- [ ] **T16 — Validate route is admin-gated.** `GET /wp-json/agentomatic/v1/validate` returns 401/403 for anonymous/non-admin requests and validation notices for an authenticated admin. *(M12)*
+- [ ] **T15 — Live envelope route.** `GET /wp-json/agentimus/v1/discovery` returns the same model as `/.well-known/discovery.json`. *(S3)*
+- [ ] **T16 — Validate route is admin-gated.** `GET /wp-json/agentimus/v1/validate` returns 401/403 for anonymous/non-admin requests and validation notices for an authenticated admin. *(M12)*
 
 ## Registration & validation
 

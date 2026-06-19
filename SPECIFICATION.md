@@ -8,7 +8,7 @@ The **WP_Discovery Protocol** defines a machine-readable discovery layer for Wor
 
 This is an **RFC-*style*** design document, in the tradition of React RFCs, Rust RFCs, and Kubernetes design proposals. It is **not** an IETF RFC and makes **no** claim to internet-standard status.
 
-This specification was **initiated by Sheikh Heera**, who currently serves as its editor; its canonical **reference implementation** is the [Agentomatic](implementations/wordpress-plugin/README.md) WordPress plugin. Authorship is recorded to establish provenance, not exclusivity — the protocol is openly licensed ([CC BY 4.0](LICENSE)) and contributions are welcome (see [CONTRIBUTING.md](CONTRIBUTING.md)). Should adoption warrant it, the project is expected to move to a neutral organization with shared governance.
+This specification was **initiated by Sheikh Heera**, who currently serves as its editor; its canonical **reference implementation** is the ~~Agentomatic~~ [Agentimus](implementations/wordpress-plugin/README.md) WordPress plugin. Authorship is recorded to establish provenance, not exclusivity — the protocol is openly licensed ([CC BY 4.0](LICENSE)) and contributions are welcome (see [CONTRIBUTING.md](CONTRIBUTING.md)). Should adoption warrant it, the project is expected to move to a neutral organization with shared governance.
 
 Two version numbers appear throughout this document and are **deliberately different**:
 

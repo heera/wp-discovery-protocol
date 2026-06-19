@@ -2,7 +2,7 @@
 /**
  * wpd-inspect — a reference *consumer* for the WP_Discovery protocol.
  *
- * Producers (e.g. the Agentomatic plugin) emit /.well-known/discovery.json; this is
+ * Producers (e.g. the Agentimus plugin) emit /.well-known/discovery.json; this is
  * the other half — a client that reads it, the way an AI agent or integration
  * would. It:
  *   1. resolves & fetches a site's discovery document (or reads a local file),
