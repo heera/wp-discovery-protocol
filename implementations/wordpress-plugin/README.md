@@ -42,4 +42,4 @@ No dependency guard is needed for the hook form: if no WP_Discovery engine is ac
 
 ## Conformance
 
-The plugin targets every **MUST** in [07-conformance.md](../../spec/07-conformance.md). The executable checks live in [tests/conformance-tests.md](../../tests/conformance-tests.md).
+The plugin targets every **MUST** in [08-conformance.md](../../spec/08-conformance.md). The executable checks live in [tests/conformance-tests.md](../../tests/conformance-tests.md).

@@ -50,6 +50,21 @@ A site (or the engine powering it) is **WP_Discovery-compliant** when it:
 - **A5.** A future implementation MAY support scoped discovery and verifiable trust (signed documents, `jwks_uri`, DID, attestation) — none of which are part of wire-format `1.0`.
 - **A6.** An implementation MAY default a declared Resource to suppressed (opt-in) when it advertises state-changing or authenticated agent action (mutation, payment, or any tool not marked `readOnlyHint`) rather than read-only access.
 
+## Consumer expectations (the Consumer Contract)
+
+Everything above describes the **engine** a site runs. A **consumer** — an agent, integration, or crawler — is a third party the protocol can neither certify nor compel, but [07-consumer-contract.md](07-consumer-contract.md) defines the behavior a site is entitled to expect from one. In brief:
+
+- **C1.** A consumer SHOULD read capabilities from the Discovery Document (via the well-known path or the advertised Link header) rather than probing plugins or guessing endpoints.
+- **C2.** A consumer MUST confirm document identity via `$schema` before trusting the contents.
+- **C3.** A consumer MUST treat capabilities as claims to verify at the endpoint, never as authorization.
+- **C4.** A consumer SHOULD confine automated interaction to the declared scope, and SHOULD NOT fuzz or probe for undeclared surface.
+- **C5.** A consumer SHOULD honor each Resource's declared `auth` scheme rather than attempt unauthenticated access.
+- **C6.** A consumer MUST ignore unrecognized top-level / `x-` keys (forward-compatibility).
+- **C7.** A consumer SHOULD fetch over HTTPS and treat non-HTTPS or unverifiable documents as untrusted.
+- **C8.** A consumer SHOULD identify itself honestly and honor the site's stated crawl/rate expectations (including `robots.txt`).
+
+These are **not** part of the engine's compliance badge; they are the cooperative norms that make the discovery layer worth publishing. See [07-consumer-contract.md](07-consumer-contract.md) for the full text and the rationale for why each is a MUST or a SHOULD.
+
 ## The "WP_Discovery compliant" badge
 
 An implementation that satisfies all **MUST** items above MAY describe itself as **WP_Discovery compliant** and display a corresponding badge. The badge asserts only the **MUST** set; it makes no claim about the SHOULD/MAY items. Because this is an RFC-*style* specification and not an IETF standard, the badge is a community signal of conformance, not a certification.

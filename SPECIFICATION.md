@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The **WP_Discovery Protocol** defines a machine-readable discovery layer for WordPress sites. It specifies (a) a server-side **registry** through which any plugin may declare its capabilities, (b) a normalized **Discovery Document** that aggregates those declarations, and (c) a set of **well-known endpoints** through which consumers — AI agents, integrations, and crawlers — retrieve that document. The protocol's guiding principle is that **plugins declare capabilities, WP_Discovery aggregates and normalizes them, and consumers read only the discovery layer** rather than querying plugins directly.
+The **WP_Discovery Protocol** defines a machine-readable discovery layer for WordPress sites. It specifies (a) a server-side **registry** through which any plugin may declare its capabilities, (b) a normalized **Discovery Document** that aggregates those declarations, and (c) a set of **well-known endpoints** through which consumers — AI agents, integrations, and crawlers — retrieve that document. The protocol's guiding principle is that **plugins declare capabilities, WP_Discovery aggregates and normalizes them, and consumers read only the discovery layer** rather than querying plugins directly. This makes the Discovery Document both a **map** of what a site exposes and a **boundary** marking the scope it has deliberately offered to automated readers. The protocol accordingly specifies a *producing-side* contract (how capabilities are declared and published, and how a site owner curates them) and a *consuming-side* contract (how a cooperative agent reads only the declared scope and verifies it at the endpoint). That boundary is a cooperative norm in the spirit of `robots.txt`, not an access-control mechanism.
 
 ## Status of this document
 
@@ -44,7 +44,8 @@ The key words **MUST**, **MUST NOT**, **REQUIRED**, **SHALL**, **SHALL NOT**, **
 | 04 — The Registry Contract | [spec/04-registry-contract.md](spec/04-registry-contract.md) |
 | 05 — Well-Known Endpoints | [spec/05-well-known-endpoints.md](spec/05-well-known-endpoints.md) |
 | 06 — Security Model | [spec/06-security-model.md](spec/06-security-model.md) |
-| 07 — Conformance | [spec/07-conformance.md](spec/07-conformance.md) |
+| 07 — The Consumer Contract | [spec/07-consumer-contract.md](spec/07-consumer-contract.md) |
+| 08 — Conformance | [spec/08-conformance.md](spec/08-conformance.md) |
 | Reference implementation | [implementations/wordpress-plugin/README.md](implementations/wordpress-plugin/README.md) |
 | Conformance tests | [tests/conformance-tests.md](tests/conformance-tests.md) |
 | Example Discovery Document | [examples/discovery.json](examples/discovery.json) |

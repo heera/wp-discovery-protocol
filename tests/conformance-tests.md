@@ -1,6 +1,6 @@
 # Conformance Tests
 
-This is a checklist of concrete, testable assertions a WP_Discovery implementation must satisfy. Each maps to one or more requirements in [spec/07-conformance.md](../spec/07-conformance.md). Run these against a live site (or a test fixture) to verify compliance.
+This is a checklist of concrete, testable assertions a WP_Discovery implementation must satisfy. Each maps to one or more requirements in [spec/08-conformance.md](../spec/08-conformance.md). Run these against a live site (or a test fixture) to verify compliance.
 
 ## Discovery Document
 

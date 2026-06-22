@@ -28,9 +28,11 @@ Or, once published, `npx wpd-inspect <target>`.
 
 ## What it checks
 
-A consumer-side subset of [spec/07-conformance.md](../../spec/07-conformance.md):
+A consumer-side subset of [spec/08-conformance.md](../../spec/08-conformance.md):
 the eleven core keys with `x-`-only extensions (M2), `spec_version` / `$schema`
 (M3), intent-only capabilities (M7/M8), and well-formed `apis[]` / `resources[]`.
+It is a practical companion to the [Consumer Contract](../../spec/07-consumer-contract.md),
+which states what a cooperative consumer does with a valid document once it has one.
 Strict full-schema validation lives in CI (against
 [the JSON Schema](../../schemas/discovery/1.0/discovery.schema.json)); this tool
 shows the checks a *client* actually cares about.

@@ -27,7 +27,13 @@ The key words below are to be interpreted as described in [RFC 2119](https://www
 : A plugin (or theme, or custom code) that declares one or more Resources to the Registry. Providers depend on nothing: if no WP_Discovery engine is active, the `wpdiscovery_register` hook simply never fires and registration is silently skipped.
 
 **Consumer**
-: Any external party — AI agent, integration, crawler, or system — that reads the Discovery Document. Consumers **read only the discovery layer**; they do not query plugins to learn what a site can do.
+: Any external party — AI agent, integration, crawler, or system — that reads the Discovery Document. Consumers **read only the discovery layer**; they do not query plugins to learn what a site can do. A cooperative Consumer also treats the published document as the site's **declared scope** — reading what was offered and verifying it at the endpoint, not probing for surface the site never advertised. See [spec/07-consumer-contract.md](spec/07-consumer-contract.md).
+
+**Declared Scope**
+: The surface a site has **deliberately chosen to expose** to automated readers — the Resources, capabilities, endpoints, and well-known documents that actually appear in its Discovery Document after owner curation. A cooperative Consumer treats the declared scope as the site's invitation and confines automated interaction to it. The declared scope is a *cooperative boundary*, not an access-control mechanism: surface omitted from it is *not advertised*, not necessarily unreachable. See [spec/07-consumer-contract.md](spec/07-consumer-contract.md).
+
+**Consumer Contract**
+: The consuming-side counterpart to the Registry Contract — the cooperative expectations a Consumer is held to: read only the declared scope, confirm document identity (`$schema`), treat capabilities as claims to verify at the endpoint (never as authorization), respect each Resource's declared `auth`, and identify itself honestly. Stated mostly as **SHOULD**, because the protocol can neither certify nor compel a third-party consumer. See [spec/07-consumer-contract.md](spec/07-consumer-contract.md).
 
 **Site Owner**
 : The administrator of the site running the engine. The owner is the **final authority over what the site advertises**: a Provider *proposes* Resources, the owner *disposes* of them. An implementation must let the owner suppress any Resource; a Provider cannot override that decision. Distinct from a Provider (who declares definitions) and a Consumer (who reads the result). See [spec/04-registry-contract.md](spec/04-registry-contract.md), "Owner authority."

@@ -10,6 +10,12 @@ The protocol rests on one principle, stated identically throughout this specific
 plugins declare capabilities  →  WP_Discovery aggregates / normalizes  →  consumers read only the discovery layer, never query plugins directly
 ```
 
+## A contract in both directions
+
+That single sentence is a contract that binds **both** sides. The site's half is to **declare** its capabilities and **publish** the scope it has chosen to expose; the consumer's half is to **read only that scope** — and verify each capability at its endpoint — rather than probing the site for surface it never advertised. The Discovery Document is therefore at once a **map** (what the site can do, and where) and a **boundary** (the surface deliberately offered to automated readers, its *declared scope*).
+
+The producing side of the contract is specified in [04-registry-contract.md](04-registry-contract.md); the consuming side in [07-consumer-contract.md](07-consumer-contract.md). Crucially, the boundary is a **cooperative norm** in the spirit of `robots.txt` — it tells a considerate agent where it is welcome — and **never** an access-control mechanism: a site MUST still enforce real access at the endpoint and MUST NOT rely on a consumer's goodwill (see [06-security-model.md](06-security-model.md)). The map is not a gate; it is the route a well-behaved agent is expected to keep to.
+
 ## Problem statement
 
 A modern WordPress site is a patchwork of independently-built features. Each feature advertises itself differently, and a consumer that wants to *understand the whole site* must today stitch together at least five disconnected sources:
@@ -44,6 +50,7 @@ Plugin → Capability Declaration → WP_Discovery Registry → Normalized Disco
 - **Zero coupling for providers.** A provider that registers depends on nothing; if WP_Discovery is absent, the hook never fires and nothing breaks.
 - **Predictable retrieval.** Serve the document at a well-known URL and advertise it with a `Link` header on every front-end response.
 - **Agent-friendliness.** Surface A2A-style agent cards minted from declared Resources.
+- **A boundary, not just a billboard.** Give a site a way to publish a *deliberate* scope, and give cooperative agents a clear scope to respect — reading only what was offered and verifying it at the endpoint.
 
 ## Non-goals
 
@@ -53,5 +60,6 @@ WP_Discovery is a **discovery layer**, not a replacement for the things it point
 - It **does not define authentication systems.** It *describes* the auth a Resource or endpoint expects (`apikey`, `oauth2`, `oidc`, …), but it neither issues nor validates credentials.
 - It **does not define runtime or execution semantics.** It tells a consumer that `commerce.cart.write` exists and where; it does not specify how a cart write is performed beyond pointing to the endpoint and its own documentation.
 - It **does not invent data.** It exposes metadata that providers declare and the site already makes public.
+- It **does not enforce consumer behavior.** It defines what a well-behaved consumer SHOULD do ([07-consumer-contract.md](07-consumer-contract.md)) but, like `robots.txt`, relies on the endpoint — not the consumer's goodwill — for actual access control.
 
 See [01-scope.md](01-scope.md) for the precise scope, and [02-discovery-model.md](02-discovery-model.md) for the Discovery Document itself.

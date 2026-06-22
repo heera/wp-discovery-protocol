@@ -17,8 +17,8 @@ WordPress is the first host, not the only conceivable one. The protocol is writt
 This specification is written for three audiences:
 
 - **Provider authors** — plugin and theme developers who want their features to be discoverable. They care chiefly about [04-registry-contract.md](04-registry-contract.md) and [03-capability-model.md](03-capability-model.md).
-- **Consumer authors** — builders of AI agents, integrations, and crawlers who read the Discovery Document. They care chiefly about [02-discovery-model.md](02-discovery-model.md) and [05-well-known-endpoints.md](05-well-known-endpoints.md).
-- **Implementers** — those building or auditing a WP_Discovery engine. They care about the whole specification and [07-conformance.md](07-conformance.md).
+- **Consumer authors** — builders of AI agents, integrations, and crawlers who read the Discovery Document. They care chiefly about [02-discovery-model.md](02-discovery-model.md) and [05-well-known-endpoints.md](05-well-known-endpoints.md), and about their own obligations in [07-consumer-contract.md](07-consumer-contract.md).
+- **Implementers** — those building or auditing a WP_Discovery engine. They care about the whole specification and [08-conformance.md](08-conformance.md).
 
 ## In scope
 
@@ -29,6 +29,7 @@ This specification is written for three audiences:
 - The **well-known endpoints**: `/.well-known/discovery.json`, the generated `agent-card.json` and `agent.json` alias, the `add_well_known()` mechanism, real-file precedence, 404 behavior, the `rel="discovery"` Link header, and the REST `discovery` and `validate` routes.
 - The **capability model**: dot-notation, intent-not-implementation, suggested namespaces, and `x-` extension tokens.
 - The **security model** for what may and may not be exposed.
+- The **consumer contract**: what a cooperative agent does with the Discovery Document — reading only the declared scope, verifying capabilities at the endpoint, honoring declared auth, and identifying itself.
 - **Conformance** requirements and the "WP_Discovery compliant" concept.
 
 ## Out of scope
@@ -38,5 +39,6 @@ This specification is written for three audiences:
 - **Replacing the REST API or plugin APIs.** WP_Discovery is additive metadata that links to existing APIs; it neither proxies nor supersedes them.
 - **Content modeling.** The protocol does not define how a site's posts, products, or events are structured internally; it only advertises that such capabilities exist and where to find them.
 - **Transport or hosting concerns** beyond serving a JSON document and a Link header.
+- **Enforcing consumer behavior.** The protocol states what a well-behaved consumer SHOULD do ([07-consumer-contract.md](07-consumer-contract.md)); it cannot compel a consumer, and a site MUST NOT rely on consumer goodwill for access control — that remains the endpoint's job.
 
 See [00-introduction.md](00-introduction.md) for the problem statement and the non-goals it shares with this scope.

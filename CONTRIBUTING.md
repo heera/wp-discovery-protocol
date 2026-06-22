@@ -25,7 +25,7 @@ Describe the change precisely. Specify exact field names, types, and rules. Incl
 State explicitly:
 
 - Whether the change is **breaking** (major), **additive** (minor), or **editorial** (patch), per [versioning.md](versioning.md).
-- Which [conformance](spec/07-conformance.md) items are added, changed, or removed.
+- Which [conformance](spec/08-conformance.md) items are added, changed, or removed.
 - Which [conformance tests](tests/conformance-tests.md) must be added or updated.
 - Whether the reference implementation already supports the behavior, or must change first.
 
