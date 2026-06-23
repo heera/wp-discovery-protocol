@@ -2,7 +2,7 @@
 
 > An open agent-readiness and AI-discovery layer for WordPress: one machine-readable document at /.well-known/discovery.json that declares a site's identity, capabilities, and APIs to AI agents and crawlers — without prior knowledge of which plugins are installed.
 
-WP_Discovery covers the descriptive layer (identity, llms.txt, Schema.org) and extends it into the operational layer (capabilities, APIs, A2A agent cards, MCP-shaped tools). It is built on converging conventions (.well-known, A2A, MCP), is openly licensed (CC BY 4.0), and ships with a reference implementation. It relates to the Open Agent Readiness Standard (OARS): OARS centers on the descriptive layer; WP_Discovery covers that and adds the operational layer.
+WP_Discovery covers the descriptive layer (identity, llms.txt, Schema.org) and extends it into the operational layer (capabilities, APIs, A2A agent cards, MCP-shaped tools). It is built on converging conventions (.well-known, A2A, MCP), is openly licensed (CC BY 4.0), and ships with a reference implementation.
 
 ## Specification
 - [Specification](https://github.com/heera/wp-discovery-protocol/blob/main/SPECIFICATION.md): master document and table of contents

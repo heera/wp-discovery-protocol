@@ -115,24 +115,22 @@
 
     <div class="pipe">Plugin&nbsp;→&nbsp;Capability Declaration&nbsp;→&nbsp;WP_Discovery Registry&nbsp;→&nbsp;Normalized Discovery Model&nbsp;→&nbsp;/.well-known/discovery.json&nbsp;→&nbsp;AI&nbsp;/&nbsp;Agents&nbsp;/&nbsp;Systems</div>
 
-    <h2>How it relates to llms.txt, Schema.org, OARS, MCP and A2A</h2>
+    <h2>How it relates to llms.txt, Schema.org, MCP and A2A</h2>
     <p>
       Most AI-readiness signals describe the <em>descriptive</em> layer — who a site is and how its
-      content may be used. Projects like the <strong>Open Agent Readiness Standard (OARS)</strong> do
-      thoughtful work there (an llms.txt summary, Schema.org, robots and content-usage directives, a
-      readiness score). WP_Discovery covers that same ground and extends one layer further, into the
-      <em>operational</em>: the same document also declares <em>what a site can do</em> — capabilities,
-      APIs, A2A agent cards and MCP-shaped tools — so an agent can move from "I understand this site"
-      to "I know which actions it exposes and how to call them." They aren't rivals so much as adjacent
-      rungs of one ladder; WP_Discovery aims to cover both, built on the conventions the agent ecosystem
-      is already converging on rather than a format of its own.
+      content may be used: an llms.txt summary, Schema.org, robots and content-usage directives.
+      WP_Discovery covers that same ground and extends one layer further, into the <em>operational</em>:
+      the same document also declares <em>what a site can do</em> — capabilities, APIs, A2A agent cards
+      and MCP-shaped tools — so an agent can move from "I understand this site" to "I know which actions
+      it exposes and how to call them." Transport protocols like MCP and A2A define <em>how</em> an agent
+      calls a tool; WP_Discovery is the layer that declares <em>which</em> tools exist and points to them,
+      built on the conventions the agent ecosystem is already converging on rather than a format of its own.
     </p>
     <table class="cmp">
       <thead><tr><th>Signal</th><th>Describes the site</th><th>Lets an agent act</th></tr></thead>
       <tbody>
         <tr><td>llms.txt</td><td class="y">yes</td><td class="n">—</td></tr>
         <tr><td>Schema.org</td><td class="y">yes</td><td class="n">—</td></tr>
-        <tr><td>OARS</td><td class="y">yes</td><td class="n">partial (paid tier)</td></tr>
         <tr><td>MCP / A2A</td><td class="n">—</td><td class="y">yes (transport)</td></tr>
         <tr class="you"><td>WP_Discovery</td><td class="y">yes</td><td class="y">yes — declares capabilities &amp; points to MCP / A2A</td></tr>
       </tbody>
@@ -190,8 +188,8 @@
       <h3>How is it different from llms.txt?</h3>
       <p>llms.txt is one descriptive signal — a text summary for language models. WP_Discovery includes that kind of descriptive signal but goes further: it also declares a site's capabilities and APIs, so an agent can act, not just read.</p>
 
-      <h3>How does it relate to OARS (the Open Agent Readiness Standard)?</h3>
-      <p>OARS centers on the descriptive layer — signals that help AI understand who a site is. WP_Discovery covers that same ground and extends into the operational layer: a discovery document that also declares what a site can do (capabilities, APIs, agent cards, MCP tools). They're adjacent rungs of the same stack and can coexist.</p>
+      <h3>How does it relate to other AI-readiness efforts?</h3>
+      <p>Most focus on the descriptive layer — signals that help AI understand who a site is, like an llms.txt summary, Schema.org, and content-usage directives. WP_Discovery covers that and adds the operational layer: declaring what a site can do. The approaches are complementary and can coexist.</p>
 
       <h3>Do I need a specific plugin?</h3>
       <p>No. WP_Discovery is an open spec any site or plugin can implement. <a href="https://github.com/heera/agentimus">Agentimus</a> is the reference implementation for WordPress.</p>
@@ -251,8 +249,8 @@
         },
         {
           "@type": "Question",
-          "name": "How does WP_Discovery relate to OARS (the Open Agent Readiness Standard)?",
-          "acceptedAnswer": { "@type": "Answer", "text": "OARS centers on the descriptive layer — signals that help AI understand who a site is. WP_Discovery covers that same ground and extends into the operational layer: a discovery document that also declares what a site can do (capabilities, APIs, agent cards, MCP tools). They are adjacent rungs of the same stack and can coexist." }
+          "name": "How does WP_Discovery relate to other AI-readiness efforts?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most focus on the descriptive layer — signals that help AI understand who a site is, like an llms.txt summary, Schema.org, and content-usage directives. WP_Discovery covers that and adds the operational layer: declaring what a site can do. The approaches are complementary and can coexist." }
         },
         {
           "@type": "Question",
