@@ -44,6 +44,7 @@ See [spec/08-conformance.md](spec/08-conformance.md) for the full MUST/SHOULD/MA
 ## Quick links
 
 - [SPECIFICATION.md](SPECIFICATION.md) — master document and table of contents
+- [FAQ.md](FAQ.md) — relationship to `llms.txt`, `/wp-json`, OpenAPI, MCP & the Abilities API (why this isn't a duplicate)
 - [terminology.md](terminology.md) — RFC 2119 keywords + glossary
 - [versioning.md](versioning.md) — semantic versioning and the v0.1-doc vs 1.0-wire distinction
 - [spec/00-introduction.md](spec/00-introduction.md) — problem statement, goals, non-goals
